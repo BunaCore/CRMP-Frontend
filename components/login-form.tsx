@@ -16,14 +16,19 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="overflow-hidden p-0">
-        <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
-            <FieldGroup>
+<div
+  className={cn(
+    "flex items-center justify-center min-h-screen scale-120",
+    className
+  )}
+  {...props}
+><Card className="w-[640px] h-[530px] overflow-hidden p-0 ">        
+  <CardContent className="grid p-0 md:grid-cols-2">
+<form className="p-6 md:p-8 md:order-2">
+              <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
-                
+<p className="text-xs">Enter your details to signin</p>                
               </div>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -70,9 +75,9 @@ export function LoginForm({
               </FieldDescription>
             </FieldGroup>
           </form>
-          <div className="bg-muted relative hidden md:block">
+          <div className="bg-muted relative hidden md:block md:order-1">
             <img
-              src="/group.png"
+              src="/Building.png"
               alt="Image"
               className="absolute  h-full w-full object-cover "
             />
