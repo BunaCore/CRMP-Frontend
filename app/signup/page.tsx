@@ -12,6 +12,7 @@ interface FormData {
   confirmPassword: string;
   universityId: string;
   department: string;
+
 }
 
 export default function SignUp() {
@@ -23,17 +24,16 @@ export default function SignUp() {
     confirmPassword: "",
     universityId: "",
     department: "",
+    
   });
 
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
-  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,6 +48,7 @@ export default function SignUp() {
       return setError("Password must be at least 6 characters");
     }
 
+
     if (formData.password !== formData.confirmPassword) {
       return setError("Passwords do not match");
     }
@@ -55,7 +56,6 @@ export default function SignUp() {
     console.log("User registered:", formData);
     setSuccess("Registration successful!");
 
-   
     setFormData({
       name: "",
       firstName: "",
@@ -64,105 +64,143 @@ export default function SignUp() {
       confirmPassword: "",
       universityId: "",
       department: "",
+     
     });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-      <div className="w-full lg:w-[1000px] h-auto lg:h-[600px] border border-black bg-white rounded-xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
+      <div className="sm:w-[400px] md:w-[500px] lg:w-[1000px] h-auto lg:h-[600px] border border-black bg-white rounded-xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
 
-        
         <div className="hidden lg:block lg:w-1/2 relative">
           <Image
             src="/group.png"
             alt="SignUp Image"
             fill
             className="object-cover"
+            
           />
-        </div>
+           <div className="absolute bottom-8 left-6 text-white">
+              
+              <p className="mt-2 text-gray-500">Join the Adama Science and Technology University
+                    research community Collaborate. innovate , and manage your projects efficiently</p>
+            </div>
 
-        {/* Right side form */}
+             <div className="absolute bottom-35 left-6 text-white">
+              <p className="text-2xl font-bold   ">Advancing Science and Technolgy through collaboration</p>
+            </div>
+
+           <div className="absolute top-5 left-6 flex items-center gap-3 text-white">
+              <Image
+                src="/ASTU.jpg"
+                alt="Astu"
+                width={40}
+                height={40}
+                className="rounded-full object-cover"
+              />
+              <p className="text-base">CRMP ASTU</p>
+            </div>
+           </div>
+
+        {/*form*/}
+
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center p-6 lg:p-8">
           <div className="mb-6 text-center lg:text-left w-full">
-            <h1 className="text-2xl font-bold mb-2">Join the research community</h1>
+            <h1 className="text-2xl font-bold mb-2">Join the Research Community</h1>
             <p className="text-gray-600 text-base">Create your account for the ASTU CRMP</p>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-3 w-full max-w-md"
+            className="flex flex-col gap-4 w-full max-w-md"
           >
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name *"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border p-3 rounded-lg shadow bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#13DAEC]"
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            {/* Full Name */}
+            <label className="flex flex-col w-full">
+              <span className="text-gray-700 text-sm mb-1 font-bold">Full Name </span>
               <input
                 type="text"
-                name="department"
-                placeholder="Department (optional)"
-                value={formData.department}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-lg shadow bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#13DAEC]"
+                className="w-full border p-2 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
               />
-              <input
-                type="text"
-                name="universityId"
-                placeholder="University ID (optional)"
-                value={formData.universityId}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-lg shadow bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#13DAEC]"
-              />
+            </label>
+
+            {/* Optional fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
+              <label className="flex flex-col w-full">
+                <span className="text-gray-700 text-sm mb-1 font-bold">Department</span>
+                <input
+                  type="text"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  className="w-full border p-2 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                />
+              </label>
+              <label className="flex flex-col w-full">
+                <span className="text-gray-700 text-sm mb-1 font-bold">University ID</span>
+                <input
+                  type="text"
+                  name="universityId"
+                  value={formData.universityId}
+                  onChange={handleChange}
+                  className="w-full border p-2 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"/>
+              </label>
             </div>
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email *"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border p-3 rounded-lg shadow bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#13DAEC]"
-            />
+            {/* Email */}
+            <label className="flex flex-col w-full">
+              <span className="text-gray-700 text-sm mb-1 font-bold">Email </span>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border p-2 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]" />
+            </label>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password *"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-lg shadow bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#13DAEC]"
-              />
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-lg shadow bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#13DAEC]"
-              />
+            {/* Passwords */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label className="flex flex-col w-full">
+                <span className="text-gray-700 text-sm mb-1 font-bold">Password </span>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full border p-2 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                />
+              </label>
+              <label className="flex flex-col w-full">
+                <span className="text-gray-700 text-sm mb-1 font-bold">Confirm Password </span>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full border p-2 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                />
+              </label>
             </div>
+
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
             {success && <p className="text-green-500 text-sm">{success}</p>}
 
             <button
               type="submit"
-              className="w-full bg-[#13DAEC] p-3 rounded hover:opacity-75 mt-2"
+              className="w-full bg-[#13DAEC] p-2 rounded hover:opacity-75 mt-2"
             >
               Create Account
             </button>
 
-            <div className="text-center text-base mt-3">
+            <div className="text-center text-base ">
               Already have an account?{" "}
               <Link href="/login" className="text-[#13DAEC]">
                 Login
               </Link>
+              <p  className="mt-2 text-gray-600 text-sm">By creating an account you agree to our terms & conditions and privacy policy</p>
             </div>
           </form>
         </div>
