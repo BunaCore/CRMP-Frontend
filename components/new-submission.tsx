@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function NewSubmission() {
   const [activeTab, setActiveTab] = useState("all");
@@ -64,11 +65,11 @@ export default function NewSubmission() {
   const paginatedData = sortedData.slice(startIndex, startIndex + rowsPerPage);
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 px-4 sm:px-8 pt-24">
+    <div className="min-h-screen w-full bg-gray-100 px-4 sm:px-8 pt-30">
      
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">Budget Module</h1>
-        <p className="text-gray-700">
+        <h1 className="lg:text-4xl text-xl font-bold mb-2">Budget Module</h1>
+        <p className="text-muted-foreground lg:text-xl text-base">
           Manage project funds, track utilization, and submit new budget requests
           for "AI for Agriculture in Rift Valley"
         </p>
@@ -79,25 +80,78 @@ export default function NewSubmission() {
 
         {/* CARDS */}
         <div className="lg:col-span-3 flex flex-col lg:flex-row gap-6">
-          <div className="flex-1 bg-white rounded-lg shadow-lg p-10">
-            <p className="text-gray-600">Total Grant Allocated</p>
-            <h2 className="text-xl font-bold">ETB 500,000</h2>
+         {/* Card 1 */}
+        <div className="flex-1 bg-white rounded-lg shadow-lg p-10 flex justify-between items-center">
+          {/* Left: text content */}
+          <div>
+            <p className="text-muted-foreground">Total Grant Allocated</p>
+            <h2 className="lg:text-2xl text-xl font-bold mt-2 mb-2">ETB 500,000</h2>
             <p className="text-gray-600">Financial Year 2025-2024</p>
           </div>
-
-          <div className="flex-1 bg-white rounded-lg shadow-lg p-10">
-            <p className="text-gray-600">Total Funds Spent</p>
-            <h2 className="text-xl font-bold">ETB 200,000</h2>
-            <p className="text-gray-600">+15% from last month</p>
-          </div>
-
-          <div className="flex-1 bg-white rounded-lg shadow-lg p-10">
-            <p className="text-gray-600">Remaining Balance</p>
-            <h2 className="text-xl font-bold">ETB 180,000</h2>
-            <p className="text-gray-600">Some summary or visualization here.</p>
+          {/* Right: image */}
+          <div>
+            <Image
+              src="/landmark.svg"
+              alt="landmark"
+              width={80}
+              height={80}
+              className=""
+            />
           </div>
         </div>
 
+        {/* Card 2 */}
+        <div className="flex-1 bg-white rounded-lg shadow-lg p-10 flex justify-between items-center">
+          <div>
+            <div className="flex items-center gap-2">
+              <Image 
+               src="/wall.svg"
+              alt="landmark"
+              width={30}
+              height={30}/>
+              <p className="text-gray-600">Total Funds Spent</p>
+            </div>
+            
+            <h2 className="lg:text-2xl text-xl font-bold mt-2 mb-2">ETB 200,000</h2>
+            <p className="text-gray-600"><span className="text-green-500">+15%</span> from last month</p>
+          </div>
+          <div>
+            <Image
+              src="/up.svg"
+              alt="up"
+              width={80}
+              height={80}
+              className=""
+            />
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div className="flex-1 bg-white rounded-lg shadow-lg p-10 flex justify-between items-center">
+          <div>
+              <div className="flex items-center gap-2">
+                  <Image
+                    src="/wallet.svg"
+                    alt="up"
+                    width={30}
+                    height={30}
+                  />
+                  <p className="text-gray-600">Remaining Balance</p>
+                </div>
+            <h2 className="lg:text-2xl text-xl font-bold mt-2 mb-2">ETB 180,000</h2>
+            <p className="text-gray-600">Some summary or visualization here.</p>
+          </div>
+          <div>
+            <Image
+              src="/bank.svg"
+              alt="bank"
+              width={80}
+              height={80}
+              className=""
+            />
+          </div>
+        </div>
+      </div>
         {/* ---------------- TABLE SECTION ---------------- */}
         <div className="lg:col-span-2 flex flex-col gap-4">
 
@@ -120,12 +174,12 @@ export default function NewSubmission() {
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
 
             {/* TABS */}
-            <div className="flex gap-2 border-b bg-gray-50 px-4 pt-3">
+            <div className="flex gap-2  border-b border-muted-foreground bg-gray-50 px-4 pt-3">
               {["all", "pending", "approved"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => { setActiveTab(tab); setCurrentPage(1); }}
-                  className={`px-4 py-2 rounded-t-lg text-sm font-semibold ${
+                  className={`px-4 py-2 rounded-t-lg text-base font-semibold ${
                     activeTab === tab
                       ? "bg-white border border-b-white border-gray-200"
                       : "text-gray-600 hover:bg-gray-100"
@@ -141,9 +195,9 @@ export default function NewSubmission() {
             </div>
 
             {/* TABLE */}
-            <div className="p-4 overflow-x-auto">
+            <div className=" overflow-x-auto">
               <table className="w-full table-auto text-left">
-                <thead className="bg-gray-100">
+                <thead className="bg-gray-300">
                   <tr>
                     <th className="py-2 px-3">Date</th>
                     <th className="py-2 px-3 w-[30%]">Description</th>
@@ -155,11 +209,11 @@ export default function NewSubmission() {
 
                 <tbody>
                   {paginatedData.map((row, i) => (
-                    <tr key={i} className="border-b hover:bg-gray-50">
+                    <tr key={i} className="border-b border-muted-foreground hover:bg-gray-50">
                       <td className="py-2 px-3 whitespace-nowrap">{row.date}</td>
                       <td className="py-2 px-3 break-words">{row.description}</td>
                       <td className="py-2 px-3">{row.category}</td>
-                      <td className="py-2 px-3">{row.amount.toLocaleString()}</td>
+                      <td className="py-2 px-3 ">{row.amount.toLocaleString()}</td>
                       <td className="py-2 px-3">
                         <span
                           className={`px-2 py-1 text-xs rounded-full ${
@@ -217,7 +271,7 @@ export default function NewSubmission() {
 
         {/* ---------------- FORM ---------------- */}
         <div className="lg:col-span-1 flex flex-col gap-4">
-          <h2 className="text-lg font-bold">Submit New Budget</h2>
+          <h2 className="text-lg font-bold">New Budget Request</h2>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -225,18 +279,18 @@ export default function NewSubmission() {
               
               <label className="flex flex-col">
                 <span className="font-semibold">Title</span>
-                <input className="border rounded-lg p-2 mt-1" />
+                <input placeholder="Conference Travel" className="border p-2 mt-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]" />
               </label>
 
               <label className="flex flex-col">
                 <span className="font-semibold">Total Amount (ETB)</span>
-                <input type="number" className="border rounded-lg p-2 mt-1" />
+                <input type="number"  placeholder="0.00" className="border p-2 mt-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]" />
               </label>
 
               
               <label className="flex flex-col">
-                <span className="font-semibold">Description</span>
-                <textarea className="border rounded-lg p-2 mt-1 min-h-[100px]" />
+                <span className="font-semibold ">Description</span>
+                <textarea  placeholder="Explain why the expence is necessary.." className="border  p-2 mt-1 min-h-[100px] border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]" />
               </label>
 
               {/* FILE UPLOAD */}
@@ -282,7 +336,7 @@ export default function NewSubmission() {
                   Save Draft
                 </button>
 
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+                <button type="submit" className="bg-[#13DAEC] text-white px-4 py-2 rounded">
                   Submit Budget
                 </button>
               </div>

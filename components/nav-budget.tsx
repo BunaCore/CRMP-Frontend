@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { BellIcon } from "@heroicons/react/24/solid";
 import { BookOpenIcon } from "@heroicons/react/24/solid";
-
+import { Bell } from "lucide-react";
 
 export default function NavSubmission() {
 
@@ -39,15 +39,15 @@ export default function NavSubmission() {
                   className="w-full h-10 pl-10 pr-3 border rounded-lg border-[#F8FBFC]  bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
                 />
               </div>
-                <BellIcon className="h-6 w-6 text-gray-600 cursor-pointer" />
+                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
               
 
               <div className='group relative'>
                   <Image src="/ASTU.jpg" alt="Astu" width={30} height={30} className="rounded-full object-cover"/>
                 <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
-                  <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-sky-400 cursor-pointer text-gray-500 rounded'>
-                      <p className='cursor-pointer hover:text-black'>settings</p>
-                      <p className='cursor-pointer hover:text-black'>Logout</p>
+                  <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-gray-300 cursor-pointer text-gray-500 rounded'>
+                      <p className='cursor-pointer text-black'>settings</p>
+                      <p className='cursor-pointer text-black'>Logout</p>
                   </div>
 
                 </div>
