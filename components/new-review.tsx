@@ -1,6 +1,8 @@
 
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+
 
 export default function NewReview() {
 
@@ -8,13 +10,27 @@ return(
         <div className="min-h-screen w-full bg-gray-50 flex flex-col lg:flex-row pt-15">
         {/* Sidebar */}
         <div className="bg-white w-full lg:w-64 shadow-lg p-6 flex flex-col gap-6">
-            <h2 className="text-2xl font-bold">Dashboard</h2>
+
+            <h2 className="text-2xl font-bold">ASTU Research Management</h2>
+
             <nav className="flex flex-col gap-3">
-            <button className="text-left px-3 py-2 rounded hover:bg-gray-100">Home</button>
-            <button className="text-left px-3 py-2 rounded hover:bg-gray-100">Budget</button>
-            <button className="text-left px-3 py-2 rounded hover:bg-gray-100">Reports</button>
+            <button className="text-left px-3 py-2 rounded hover:bg-gray-100">Dashboard</button>
+            <button className="text-left px-3 py-2 rounded hover:bg-gray-100">New Proposal</button>
+            <button className="text-left px-3 py-2 rounded hover:bg-gray-100">My Projects</button>
             <button className="text-left px-3 py-2 rounded hover:bg-gray-100">Settings</button>
             </nav>
+
+            {/* Bottom help box */}
+            <div className="mt-auto bg-gray-50 border rounded-lg p-4">
+            <p className="font-semibold text-sm">Need help?</p>
+            <p className="text-sm text-gray-600 mb-3">
+                Contact support.
+            </p>
+            <button className="w-full bg-[#13DAEC] rounded py-2 text-sm font-medium">
+                Contact Support
+            </button>
+            </div>
+
         </div>
 
         {/* Main content */}
@@ -153,12 +169,34 @@ return(
                 </div>
 
                 {/*submit*/}
+                <div className="w-full mt-5 h-60 rounded-md bg-sky-100 py-10 px-12">
+                    {/* checkbox + heading */}
+                    <div className="flex items-start gap-3">
+                        <input
+                        type="checkbox"
+                        className="mt-1 w-4 h-4 cursor-pointer"
+                        />
+                        <h1 className="font-semibold">
+                        I certify that the information provided is accurate.
+                        </h1>
+                    </div>
 
-                <div className="w-full h-40 rounded-md bg-sky-100 py-6 px-12">
-                    <h1>I certify that the information provided is accurate.</h1>
-                    <p className="text-sm text-gray-400">By checking this box, Iconfirm that this proposal adherse to all ASTU reserach guidelines and ethical standards.</p>
+                    <p className="text-sm text-gray-400 mt-2">
+                        By checking this box, I confirm that this proposal adheres to all ASTU research guidelines and ethical standards.
+                    </p>
+                   <div className="flex justify-between py-5">
 
-                </div>
+                         <span className="flex items-center gap-2">
+                            <ArrowLeft size={20} />
+                            <p>Back to documents</p>
+                        </span>
+
+                        <div className="flex gap-4">
+                            <button className="bg-[#13DAEC] px-4 py-3 rounded">Save as draft</button>
+                            <button className="bg-[#13DAEC] px-4 py-3 rounded">Submit proposal</button>
+                        </div>
+                    </div>
+                    </div>
         </div>
         </div>
 
