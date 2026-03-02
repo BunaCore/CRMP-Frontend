@@ -1,12 +1,14 @@
-import NavSubmission from "@/components/nav-budget"
-import NewSubmission from "@/components/new-submission"
+import NewBudget from "@/components/new-budget"
+import NavBudget from "@/components/nav-budget"
 
 export default function Submission() {
 
     return(
         <>
-        <NavSubmission/>
-        <NewSubmission/>
+        {/*<BudgetForm/>
+        <NavBudget/>*/}
+        <NavBudget/>
+        <NewBudget/>
         </>
     )
     

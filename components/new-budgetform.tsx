@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function NewSubmission() {
+export default function BudgetForm() {
   const [activeTab, setActiveTab] = useState("all");
   const [sortField, setSortField] = useState("");
   const [fileName, setFileName] = useState("");
