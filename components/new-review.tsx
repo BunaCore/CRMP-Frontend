@@ -10,9 +10,18 @@ import ProjectDetail from "@/components/project-detail";
 import Stepper from "@/components/stepper";
 
 
+interface Project {
+  title: string;
+  theme: string;
+  abstract: string;
+  duration: string;
+  startDate: string;
+}
+
+
 export default function NewReview() {
 
-      const [project, setProject] = useState(null);
+      const [project, setProject] = useState<Project | null>(null);
       const [team, setTeam] = useState([]);
       const [isOpen, setIsOpen] = useState(false); 
       const [documents, setDocuments] = useState([]);
@@ -105,9 +114,9 @@ export default function NewReview() {
             
 
             {/*project detail*/}
-                <ProjectDetail
-                        project={project}
-                        onEdit={() => console.log("edit project")}
+            <ProjectDetail
+                project={project}
+                onEdit={() => console.log("edit project")}
                 />
 
              
@@ -147,8 +156,8 @@ export default function NewReview() {
                         </span>
 
                         <div className="flex gap-4 ">
-                            <button className="bg-gray-200 px-4 py-3 rounded cursor-pointer">Save as draft</button>
-                            <button className="bg-[#13DAEC] px-4 py-3 rounded cursor-pointer">Submit proposal</button>
+                            <button  /*onClick={handleSaveDraft}*/ className="bg-gray-200 px-4 py-3 rounded cursor-pointer">Save as draft</button>
+                            <button /*onClick={handleSubmitProposal} */className="bg-[#13DAEC] px-4 py-3 rounded cursor-pointer">Submit proposal</button>
                         </div>
                     </div>
                 </div>
