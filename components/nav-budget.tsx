@@ -1,45 +1,22 @@
 
 import Image from "next/image";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { BellIcon } from "@heroicons/react/24/solid";
 import { BookOpenIcon } from "@heroicons/react/24/solid";
 import { Bell } from "lucide-react";
 
-export default function NavSubmission() {
+export default function NavBudget() {
 
 
   return(
 
-       <nav className="fixed flex items-center justify-between py-3 px-8 top-0 w-full h-16 bg-white shadow-md">
+       <nav className="fixed flex items-center justify-between py-3 px-20 top-0 w-full h-16 bg-white shadow-md">
 
-        
-            <ul className="flex gap-5 text-sm text-gray-700 cursor-pointer">
-
-                {/* Always visible */}
-                <li className="flex items-center gap-1">
+            <li className="flex items-center gap-1">
                   <BookOpenIcon className="h-6 w-6 text-gray-700" />
                   <span className="text-black font-bold text-base">CRMP-ASTU</span>
-                </li>
+            </li>
 
-                {/* Desktop only */}
-                <li className="hidden md:block text-gray-600 text-base">Dashboard</li>
-                <li className="hidden md:block text-gray-600 text-base">Projects</li>
-                <li className="hidden md:block text-gray-600 text-base">Budget</li>
-                <li className="hidden md:block text-gray-600 text-base">Report</li>
-
-              </ul>
-
-            <div className="flex items-center gap-6">
-
-              {/* Desktop only search */}
-              <div className="relative w-64 hidden md:block">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type="search"
-                  placeholder="Search..."
-                  className="w-full h-10 pl-10 pr-3 border rounded-lg border-[#F8FBFC] bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-                />
-              </div>
+            <div className="flex items-center gap-8">
 
               {/* Always visible */}
               <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />

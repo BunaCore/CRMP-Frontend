@@ -5,8 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface FormData {
-  name: string;
-  firstName: string;
+  fullname: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -18,8 +17,7 @@ interface FormData {
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    firstName: "",
+    fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -44,7 +42,7 @@ export default function SignUpForm() {
     setError("");
     setSuccess("");
 
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.fullname || !formData.email || !formData.password) {
       return setError("Name, email and password are required");
     }
 
@@ -63,8 +61,7 @@ export default function SignUpForm() {
     setSuccess("Registration successful!");
 
     setFormData({
-      name: "",
-      firstName: "",
+      fullname: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -127,7 +124,7 @@ export default function SignUpForm() {
               <input
                 type="text"
                 name="name"
-                value={formData.name}
+                value={formData.fullname}
                 onChange={handleChange}
                 className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
               />

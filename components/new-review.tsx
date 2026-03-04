@@ -8,47 +8,109 @@ import TeamReview from "@/components/team-review";
 import TableReview from "@/components/table-review";
 import ProjectDetail from "@/components/project-detail";
 import Stepper from "@/components/stepper";
+import { useParams } from "next/navigation";
 
+
+interface Project {
+  title: string;
+  theme: string;
+  abstract: string;
+  duration: string;
+  startDate: string;
+}
 
 export default function NewReview() {
 
-      const [project, setProject] = useState(null);
+      const [project, setProject] = useState<Project | null>(null);
       const [team, setTeam] = useState([]);
       const [isOpen, setIsOpen] = useState(false); 
       const [documents, setDocuments] = useState([]);
       const [loading, setLoading] = useState(false);
 
-       /*useEffect(() => {
-            const fetchProject = async () => {
-            const res = await fetch("http://localhost:5000/project");
-            const data = await res.json();
-            setProject(data);
-            };
+      const { id } = useParams();
 
-            fetchProject();
-        }, []);
+    useEffect(() => {
+    const fetchProject = async () => {
+        try {
+      const res = await fetch(`/api/projects/${id}`);
 
-        useEffect(() => {
-        const fetchTeam = async () => {
-            const res = await fetch("http://localhost:5000/team"); // your endpoint
-            const data = await res.json();
-            setTeam(data);
+      if (!res.ok) throw new Error("Failed to fetch project");
+
+      const data = await res.json();
+      setProject(data);
+    } catch (err) {
+      console.error(err);
+        }
+    };
+
+    if (id) fetchProject();
+    }, [id]);
+
+    useEffect(() => {
+    const fetchTeam = async () => {
+        try {
+        const res = await fetch(`/api/projects/${id}/team`);
+
+        if (!res.ok) throw new Error("Failed to fetch team");
+
+        const data = await res.json();
+        setTeam(data);
+        } catch (err) {
+        console.error(err);
+            }
         };
 
-        fetchTeam();
-        }, []);
+        if (id) fetchTeam();
+        }, [id]);
 
-        useEffect(() => {
-            const fetchDocuments = async () => {
-            const res = await fetch("http://localhost:5000/documents"); // your API endpoint
-            const data = await res.json();
-            setDocuments(data);
-            };
+    useEffect(() => {
+    const fetchDocuments = async () => {
+        try {
+        setLoading(true);
 
-            fetchDocuments();
-        }, []);*/
+        const res = await fetch(`/api/projects/${id}/documents`);
 
-        
+        if (!res.ok) throw new Error("Failed to fetch documents");
+
+        const data = await res.json();
+        setDocuments(data);
+        } catch (err) {
+        console.error(err);
+        } finally {
+        setLoading(false);
+        }
+    };
+
+    if (id) fetchDocuments();
+    }, [id]);
+
+       {/*submit*/}
+    const handleSubmitProposal = async () => {
+        try {
+            const res = await fetch(`/api/projects/${id}/submit`, {
+            method: "POST",
+            });
+
+            if (!res.ok) throw new Error("Submission failed");
+
+            console.log("Proposal submitted");
+        } catch (err) {
+            console.error(err);
+        }
+        };  {/*save draft*/}
+   const handleSaveDraft = async () => {
+        try {
+            const res = await fetch(`/api/projects/${id}/draft`, {
+            method: "POST",
+            });
+
+            if (!res.ok) throw new Error("Failed to save draft");
+
+            console.log("Draft saved");
+        } catch (err) {
+            console.error(err);
+        }
+        };
 
    return(
         <div className="min-h-screen w-full bg-gray-50 flex flex-col lg:flex-row pt-17">
@@ -105,9 +167,9 @@ export default function NewReview() {
             
 
             {/*project detail*/}
-                <ProjectDetail
-                        project={project}
-                        onEdit={() => console.log("edit project")}
+            <ProjectDetail
+                project={project}
+                onEdit={() => console.log("edit project")}
                 />
 
              
@@ -147,8 +209,8 @@ export default function NewReview() {
                         </span>
 
                         <div className="flex gap-4 ">
-                            <button className="bg-gray-200 px-4 py-3 rounded cursor-pointer">Save as draft</button>
-                            <button className="bg-[#13DAEC] px-4 py-3 rounded cursor-pointer">Submit proposal</button>
+                            <button  onClick={handleSaveDraft} className="bg-gray-200 px-4 py-3 rounded cursor-pointer">Save as draft</button>
+                            <button  onClick={handleSubmitProposal} className="bg-[#13DAEC] px-4 py-3 rounded cursor-pointer">Submit proposal</button>
                         </div>
                     </div>
                 </div>
