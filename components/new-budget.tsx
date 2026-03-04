@@ -17,6 +17,54 @@ export default function NewBudget() {
     setRows([...rows, { description: "", category: "", unitCost: 0, qty: 0, total: 0 }]);
   };
 
+   const handleSave = async (status: "draft" | "submitted") => {
+   try {
+    const res = await fetch("/api/budget", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rows,
+        status,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to save budget");
+    }
+
+    const data = await res.json();
+    console.log("Saved:", data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+  const handleSubmit = async () => {
+  try {
+    const res = await fetch("/api/budget", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ rows }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Submission failed");
+    }
+
+    const data = await res.json();
+    console.log("Success:", data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+ 
+
+
   return (
     <div className="flex flex-col gap-6 px-6 pt-30 pb-10">
       <div className="px-20 mb-8">
@@ -32,7 +80,7 @@ export default function NewBudget() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center py-3 px-1 w-60 bg-white rounded-md border border-[#13DAEC]">
+        <div className="flex flex-col items-center py-3 px-1 w-60 h-25 bg-white rounded-md border border-[#13DAEC]">
           <p className="text-gray-500 text-base">Total Project Budget</p>
           <h1 className="text-3xl font-bold">{grandTotal.toFixed(2)} ETB</h1>
         </div>
@@ -52,10 +100,10 @@ export default function NewBudget() {
           </button>
 
           <div className="flex gap-4">
-            <button className="w-32 h-15 bg-gray-200 px-4 py-2 rounded-md cursor-pointer">
+            <button onClick={() => handleSave("draft")} className="w-32 h-15 bg-gray-200 px-4 py-2 rounded-md cursor-pointer">
               Save Draft
             </button>
-            <button className="w-32 h-15 bg-[#13DAEC] px-4 py-2 rounded-md cursor-pointer">
+            <button onClick={() => handleSave("submitted")} className="w-32 h-15 bg-[#13DAEC] px-4 py-2 rounded-md cursor-pointer">
               Save & Continue
             </button>
           </div>
