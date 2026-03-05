@@ -157,21 +157,9 @@ export default function DraftProposalClient() {
 
   return (
     <div className="flex h-screen w-full bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-white overflow-hidden">
-      {/* Sidebar - Desktop */}
-      
 
-        
-        
-        
 
-      {/* Mobile Sidebar Overlay */}
-      {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
+     
    
 
       {/* Main Content */}
