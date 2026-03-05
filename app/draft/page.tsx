@@ -78,7 +78,7 @@ export default function DraftProposalClient() {
 
   const handleSaveDraft = () => {
     console.log('Saving draft:', { projectTitle, abstract, keywords, piSearch, uploadedFiles })
-    // API call to save draft
+    
   }
 
   const handleNextStep = () => {
