@@ -84,7 +84,7 @@ export default function NewReview() {
     if (id) fetchDocuments();
     }, [id]);
 
-       {/*submit*/}
+       //submit
     const handleSubmitProposal = async () => {
         try {
             const res = await fetch(`/api/projects/${id}/submit`, {
@@ -97,8 +97,9 @@ export default function NewReview() {
         } catch (err) {
             console.error(err);
         }
-        };  {/*save draft*/}
-   const handleSaveDraft = async () => {
+        };  
+        //save draft
+      const handleSaveDraft = async () => {
         try {
             const res = await fetch(`/api/projects/${id}/draft`, {
             method: "POST",
