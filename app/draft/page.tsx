@@ -153,60 +153,16 @@ export default function DraftProposalClient() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  const sidebarLinks = [
-    { href: '#', icon: LayoutDashboard, label: 'Dashboard' },
-    { href: '#', icon: CheckCircle, label: 'Active Grants' },
-    { href: '#', icon: Clock, label: 'Proposal History', active: true },
-    { href: '#', icon: BarChart, label: 'Reports' },
-  ]
+  
 
   return (
     <div className="flex h-screen w-full bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-white overflow-hidden">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex flex-col w-64 border-r border-[#cfdbe7] bg-white dark:bg-[#1a2632] dark:border-gray-700">
-        {/* Logo Area */}
-        <div className="p-4 flex items-center gap-3 border-b border-[#cfdbe7] dark:border-gray-700 h-16">
-          <div className="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-primary font-bold text-xl">
-            CRMP
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-[#0d141b] dark:text-white text-base font-bold leading-none">CRMP</h1>
-            <p className="text-[#4c739a] text-xs font-normal mt-1">ASTU Research Portal</p>
-          </div>
-        </div>
+      
 
-        {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-2">
-          {sidebarLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group ${
-                link.active 
-                  ? 'bg-[#e7edf3] dark:bg-gray-700 text-[#0d141b] dark:text-white' 
-                  : 'text-[#4c739a] hover:bg-[#e7edf3] dark:hover:bg-gray-700'
-              }`}
-            >
-              <link.icon 
-                size={20} 
-                className={link.active ? 'text-primary' : 'group-hover:text-primary'} 
-              />
-              <span className="text-sm font-medium">{link.label}</span>
-            </Link>
-          ))}
-        </nav>
-
-        {/* Settings Link */}
-        <div className="p-4 border-t border-[#cfdbe7] dark:border-gray-700">
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-[#e7edf3] dark:hover:bg-gray-700 transition-colors group"
-          >
-            <Settings size={20} className="group-hover:text-primary" />
-            <span className="text-sm font-medium">Settings</span>
-          </Link>
-        </div>
-      </aside>
+        
+        
+        
 
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
@@ -216,47 +172,7 @@ export default function DraftProposalClient() {
         />
       )}
 
-      {/* Mobile Sidebar */}
-      <aside className={`fixed md:hidden flex flex-col w-64 h-full border-r border-[#cfdbe7] bg-white dark:bg-[#1a2632] dark:border-gray-700 transition-transform duration-300 z-50 ${
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
-        <div className="p-4 flex items-center gap-3 border-b border-[#cfdbe7] dark:border-gray-700 h-16">
-          <div className="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-primary font-bold text-xl">
-            CRMP
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-[#0d141b] dark:text-white text-base font-bold leading-none">CRMP</h1>
-            <p className="text-[#4c739a] text-xs font-normal mt-1">ASTU Research Portal</p>
-          </div>
-        </div>
-        <nav className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-2">
-          {sidebarLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group ${
-                link.active 
-                  ? 'bg-[#e7edf3] dark:bg-gray-700 text-[#0d141b] dark:text-white' 
-                  : 'text-[#4c739a] hover:bg-[#e7edf3] dark:hover:bg-gray-700'
-              }`}
-              onClick={() => setIsSidebarOpen(false)}
-            >
-              <link.icon size={20} className={link.active ? 'text-primary' : ''} />
-              <span className="text-sm font-medium">{link.label}</span>
-            </Link>
-          ))}
-        </nav>
-        <div className="p-4 border-t border-[#cfdbe7] dark:border-gray-700">
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[#4c739a] hover:bg-[#e7edf3] dark:hover:bg-gray-700 transition-colors group"
-            onClick={() => setIsSidebarOpen(false)}
-          >
-            <Settings size={20} />
-            <span className="text-sm font-medium">Settings</span>
-          </Link>
-        </div>
-      </aside>
+   
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-full relative overflow-hidden">
