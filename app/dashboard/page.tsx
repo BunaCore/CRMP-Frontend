@@ -273,9 +273,15 @@ function ResearchTable() {
           <h2 className="text-lg font-semibold text-slate-900">Research Portfolio</h2>
           <p className="text-slate-600 text-xs mt-1">Management of your active and pending proposals</p>
         </div>
-        <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-          <Filter className="w-4 h-4 text-slate-600" />
-        </button>
+<button className="flex items-center gap-2 p-2 hover:bg-slate-100 rounded-lg transition-colors">
+  <Filter className="w-4 h-4 text-slate-600" />
+  <p>Filter</p>
+</button>
+
+<button className="flex items-center gap-2 p-2 hover:bg-slate-100 rounded-lg transition-colors">
+  <Filter className="w-4 h-4 text-slate-600" />
+  <p>Filter</p>
+</button>
       </div>
 
       <div className="overflow-x-auto">
