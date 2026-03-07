@@ -9,6 +9,9 @@ import TableReview from "@/components/table-review";
 import ProjectDetail from "@/components/project-detail";
 import Stepper from "@/components/stepper";
 import { useParams } from "next/navigation";
+import useProjectStore from "@/store/projectStore"
+import useUserStore from '@/store/userStore'
+import useTeamStore from "@/store/teamStore";
 
 
 interface Project {
@@ -21,11 +24,14 @@ interface Project {
 
 export default function NewReview() {
 
-      const [project, setProject] = useState<Project | null>(null);
-      const [team, setTeam] = useState([]);
+      
+      const { currentUser, error, signInStart, signInSuccess, signInFailure } = useUserStore()
+      const { setProject } = useProjectStore()
+      const { setTeam } = useTeamStore();
       const [isOpen, setIsOpen] = useState(false); 
       const [documents, setDocuments] = useState([]);
-      const [loading, setLoading] = useState(false);
+      const [loading, setLoading] = useState(false); 
+      
 
       const { id } = useParams();
 
@@ -47,21 +53,19 @@ export default function NewReview() {
     }, [id]);
 
     useEffect(() => {
-    const fetchTeam = async () => {
-        try {
-        const res = await fetch(`/api/projects/${id}/team`);
+  const fetchTeam = async () => {
+    try {
+      const res = await fetch(`/api/projects/${id}/team`);
+      if (!res.ok) throw new Error("Failed to fetch team");
+      const data = await res.json();
+      setTeam(data);
+    } catch (err) {
+      console.error(err);
+    }
+    }
 
-        if (!res.ok) throw new Error("Failed to fetch team");
-
-        const data = await res.json();
-        setTeam(data);
-        } catch (err) {
-        console.error(err);
-            }
-        };
-
-        if (id) fetchTeam();
-        }, [id]);
+    if (id) fetchTeam();
+    }, [id, setTeam]);
 
     useEffect(() => {
     const fetchDocuments = async () => {
@@ -169,13 +173,12 @@ export default function NewReview() {
 
             {/*project detail*/}
             <ProjectDetail
-                project={project}
                 onEdit={() => console.log("edit project")}
-                />
+            />
 
              
              {/*table*/}
-                <TeamReview team={team} />
+               <TeamReview />
             
 
             {/*budget part*/}

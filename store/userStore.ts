@@ -22,4 +22,4 @@ const useUserStore = create<UserState>((set) => ({
   signInFailure: (message) => set({ error: message, loading: false }),
 }))
 
-export default useUserStore
+export default useUserStore;
