@@ -9,6 +9,10 @@ import TableReview from "@/components/table-review";
 import ProjectDetail from "@/components/project-detail";
 import Stepper from "@/components/stepper";
 import { useParams } from "next/navigation";
+import useProjectStore from "@/store/projectStore"
+import useUserStore from '@/store/userStore'
+import useTeamStore from "@/store/teamStore";
+import useDocumentStore from "@/store/documentStore";
 
 
 interface Project {
@@ -21,11 +25,13 @@ interface Project {
 
 export default function NewReview() {
 
-      const [project, setProject] = useState<Project | null>(null);
-      const [team, setTeam] = useState([]);
-      const [isOpen, setIsOpen] = useState(false); 
-      const [documents, setDocuments] = useState([]);
-      const [loading, setLoading] = useState(false);
+      
+      const { currentUser,loading, error, setLoading} = useUserStore()
+      const { setProject } = useProjectStore()
+      const { setTeam } = useTeamStore();
+      const { documents, setDocuments} = useDocumentStore();
+      
+      
 
       const { id } = useParams();
 
@@ -47,44 +53,42 @@ export default function NewReview() {
     }, [id]);
 
     useEffect(() => {
-    const fetchTeam = async () => {
-        try {
-        const res = await fetch(`/api/projects/${id}/team`);
+  const fetchTeam = async () => {
+    try {
+      const res = await fetch(`/api/projects/${id}/team`);
+      if (!res.ok) throw new Error("Failed to fetch team");
+      const data = await res.json();
+      setTeam(data);
+    } catch (err) {
+      console.error(err);
+    }
+    }
 
-        if (!res.ok) throw new Error("Failed to fetch team");
-
-        const data = await res.json();
-        setTeam(data);
-        } catch (err) {
-        console.error(err);
-            }
-        };
-
-        if (id) fetchTeam();
-        }, [id]);
+    if (id) fetchTeam();
+    }, [id, setTeam]);
 
     useEffect(() => {
-    const fetchDocuments = async () => {
-        try {
-        setLoading(true);
+  const fetchDocuments = async () => {
+    try {
+      setLoading(true);
 
-        const res = await fetch(`/api/projects/${id}/documents`);
+      const res = await fetch(`/api/projects/${id}/documents`);
+      if (!res.ok) throw new Error("Failed to fetch documents");
 
-        if (!res.ok) throw new Error("Failed to fetch documents");
+      const data = await res.json();
+      setDocuments(data); 
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const data = await res.json();
-        setDocuments(data);
-        } catch (err) {
-        console.error(err);
-        } finally {
-        setLoading(false);
-        }
-    };
+  if (id) fetchDocuments();
+}, [id, setDocuments, setLoading]);
+  
 
-    if (id) fetchDocuments();
-    }, [id]);
-
-       {/*submit*/}
+       //submit
     const handleSubmitProposal = async () => {
         try {
             const res = await fetch(`/api/projects/${id}/submit`, {
@@ -97,8 +101,9 @@ export default function NewReview() {
         } catch (err) {
             console.error(err);
         }
-        };  {/*save draft*/}
-   const handleSaveDraft = async () => {
+        };  
+        //save draft
+      const handleSaveDraft = async () => {
         try {
             const res = await fetch(`/api/projects/${id}/draft`, {
             method: "POST",
@@ -168,21 +173,16 @@ export default function NewReview() {
 
             {/*project detail*/}
             <ProjectDetail
-                project={project}
                 onEdit={() => console.log("edit project")}
-                />
+            />
 
              
              {/*table*/}
-                <TeamReview team={team} />
+               <TeamReview />
             
 
             {/*budget part*/}
-               <TableReview
-                    documents={documents}
-                    loading={loading}
-                    onEdit={() => console.log("edit clicked")}
-                    />
+               <TableReview onEdit={() => console.log("edit clicked")} />
                 
 
                 {/*submit*/}

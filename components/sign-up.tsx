@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import useUserStore from '@/store/userStore'
+
 
 interface FormData {
   fullname: string;
@@ -16,6 +18,8 @@ interface FormData {
 }
 
 export default function SignUpForm() {
+
+  const { currentUser, loading, error, signInStart, signInSuccess, signInFailure } = useUserStore()
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",
@@ -27,8 +31,7 @@ export default function SignUpForm() {
     
   });
 
-  const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
+  const [formerror, setFormError] = useState<string>("");
 
  const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,40 +40,66 @@ export default function SignUpForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
 
-    if (!formData.fullname || !formData.email || !formData.password) {
-      return setError("Name, email and password are required");
-    }
+  
+  setFormError("")
 
-    if (formData.password.length < 6) {
-      return setError("Password must be at least 6 characters");
-    }
-    if (!formData.email.includes("@")) {
-      return setError("Enter a valid email");
-    }
+  // --- Local validation ---
+  if (!formData.fullname || !formData.email || !formData.password) {
+    return setFormError("Name, email and password are required")
+  }
 
-    if (formData.password !== formData.confirmPassword) {
-      return setError("Passwords do not match");
-    }
+  if (formData.password.length < 6) {
+    return setFormError("Password must be at least 6 characters")
+  }
 
-    console.log("User registered:", formData);
-    setSuccess("Registration successful!");
+  if (!formData.email.includes("@")) {
+    return setFormError("Enter a valid email")
+  }
 
-    setFormData({
-      fullname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      universityId: "",
-      department: "",
-      role:"",
+  if (formData.password !== formData.confirmPassword) {
+    return setFormError("Passwords do not match")
+  }
+
+  // --- Global store: start loading ---
+  signInStart()
+
+  try {
+    
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+    const data = await res.json()
+
+    if (!res.ok) {
      
-    });
-  };
+      signInFailure(data.message || "Signup failed")
+    } else {
+      
+      signInSuccess(data.user)
+
+      
+      setFormData({
+        fullname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        universityId: "",
+        department: "",
+        role: "",
+      })
+
+      setFormError("") 
+      alert("Registration successful!")
+    }
+  } catch (err: any) {
+    signInFailure(err.message || "Network error")
+  }
+}
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -208,7 +237,6 @@ export default function SignUpForm() {
 
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            {success && <p className="text-green-500 text-sm">{success}</p>}
 
             <button
               type="submit"
