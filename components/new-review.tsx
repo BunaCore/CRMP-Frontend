@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import useProjectStore from "@/store/projectStore"
 import useUserStore from '@/store/userStore'
 import useTeamStore from "@/store/teamStore";
+import useDocumentStore from "@/store/documentStore";
 
 
 interface Project {
@@ -25,12 +26,11 @@ interface Project {
 export default function NewReview() {
 
       
-      const { currentUser, error, signInStart, signInSuccess, signInFailure } = useUserStore()
+      const { currentUser,loading, error, setLoading} = useUserStore()
       const { setProject } = useProjectStore()
       const { setTeam } = useTeamStore();
-      const [isOpen, setIsOpen] = useState(false); 
-      const [documents, setDocuments] = useState([]);
-      const [loading, setLoading] = useState(false); 
+      const { documents, setDocuments} = useDocumentStore();
+      
       
 
       const { id } = useParams();
@@ -68,25 +68,25 @@ export default function NewReview() {
     }, [id, setTeam]);
 
     useEffect(() => {
-    const fetchDocuments = async () => {
-        try {
-        setLoading(true);
+  const fetchDocuments = async () => {
+    try {
+      setLoading(true);
 
-        const res = await fetch(`/api/projects/${id}/documents`);
+      const res = await fetch(`/api/projects/${id}/documents`);
+      if (!res.ok) throw new Error("Failed to fetch documents");
 
-        if (!res.ok) throw new Error("Failed to fetch documents");
+      const data = await res.json();
+      setDocuments(data); 
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const data = await res.json();
-        setDocuments(data);
-        } catch (err) {
-        console.error(err);
-        } finally {
-        setLoading(false);
-        }
-    };
-
-    if (id) fetchDocuments();
-    }, [id]);
+  if (id) fetchDocuments();
+}, [id, setDocuments, setLoading]);
+  
 
        //submit
     const handleSubmitProposal = async () => {
@@ -182,11 +182,7 @@ export default function NewReview() {
             
 
             {/*budget part*/}
-               <TableReview
-                    documents={documents}
-                    loading={loading}
-                    onEdit={() => console.log("edit clicked")}
-                    />
+               <TableReview onEdit={() => console.log("edit clicked")} />
                 
 
                 {/*submit*/}

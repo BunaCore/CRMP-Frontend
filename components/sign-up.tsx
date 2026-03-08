@@ -43,7 +43,7 @@ export default function SignUpForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault()
 
-  // Clear previous errors
+  
   setFormError("")
 
   // --- Local validation ---
@@ -76,13 +76,13 @@ export default function SignUpForm() {
     const data = await res.json()
 
     if (!res.ok) {
-      // Store API error in global state
+     
       signInFailure(data.message || "Signup failed")
     } else {
-      // Store user in global state
+      
       signInSuccess(data.user)
 
-      // Optionally reset the form
+      
       setFormData({
         fullname: "",
         email: "",
@@ -93,8 +93,7 @@ export default function SignUpForm() {
         role: "",
       })
 
-      // Optional: local success message
-      setFormError("") // clear any previous form errors
+      setFormError("") 
       alert("Registration successful!")
     }
   } catch (err: any) {
