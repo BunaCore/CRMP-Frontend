@@ -17,6 +17,13 @@ interface TableProps {
 }
 
 export default function Table({ rows, setRows, onTotalChange }: TableProps) {
+  // ensure only the first six rows exist in state
+  React.useEffect(() => {
+    if (rows.length > 6) {
+      setRows(rows.slice(0, 6));
+    }
+  }, [rows, setRows]);
+
   const handleChange = (index: number, field: keyof Row, value: string | number) => {
     const updatedRows = [...rows];
     if (field === "unitCost" || field === "qty") {
@@ -54,7 +61,7 @@ export default function Table({ rows, setRows, onTotalChange }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
+          {rows.slice(0, 6).map((row, index) => (
             <tr key={index} className="border-b hover:bg-gray-50">
               <td className="py-3 px-4">
                 <input
@@ -96,14 +103,7 @@ export default function Table({ rows, setRows, onTotalChange }: TableProps) {
                 />
               </td>
               <td className="py-2 px-4 text-center font-medium">{row.total.toFixed(2)}</td>
-              <td className="py-2 px-4 text-center">
-                <button
-                  onClick={() => deleteRow(index)}
-                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </td>
+              
             </tr>
           ))}
         </tbody>
