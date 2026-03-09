@@ -1,9 +1,14 @@
+import * as React from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { DataTable } from "@/components/data-table"
 import { SectionCards } from "@/components/section-cards"
 import { SiteHeader } from "@/components/site-header"
 import { BudgetUtilization } from "@/components/budget-utilization"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
+import { DashboardSidebar } from "@/components/dashboardSidebar"
 
 import data from "./data.json"
 
@@ -18,25 +23,43 @@ export default function Page() {
       }
     >
       <AppSidebar variant="inset" />
+
       <SidebarInset>
         <SiteHeader />
+
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-4 py-4 md:gap-6 md:py-6">
-            
+
             {/* Section Cards */}
             <div className="px-4 lg:px-6">
               <SectionCards />
             </div>
 
-           <div className="px-4 lg:px-6">
-  <div className="w-full overflow-hidden" style={{ transform: "scaleY(0.7)", transformOrigin: "top" }}>
-    <BudgetUtilization />
-  </div>
-</div>
+            {/* Budget Utilization */}
+            <div className="px-4 lg:px-6">
+              <div
+                className="w-full"
+                style={{
+                  transform: "scaleY(0.8)",
+                  transformOrigin: "top",
+                }}
+              >
+                <BudgetUtilization />
+              </div>
+            </div>
 
             <div className="px-4 lg:px-6">
-              <div className="origin-top-left scale-[0.70]">
-                <DataTable data={data} />
+              <div className="flex flex-col xl:flex-row gap-6 w-full">
+
+               
+                <div className="flex-1 min-w-0">
+                  <DataTable data={data} />
+                </div>
+
+                <div className="w-full xl:w-[300px] scale-95 origin-top">
+                  <DashboardSidebar />
+                </div>
+
               </div>
             </div>
 

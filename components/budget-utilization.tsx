@@ -5,10 +5,9 @@ import { CheckCircle2 } from "lucide-react"
 
 export function BudgetUtilization() {
   return (
-    <Card className="w-full rounded-xl border bg-muted/30">
+    <Card className="w-full rounded-xl border bg-muted/30 ">
       <CardContent className="p-6 space-y-6">
 
-        {/* Top section */}
         <div className="flex items-start justify-between">
           <div>
             <h2 className="text-xl font-semibold">Budget Utilization</h2>
@@ -17,7 +16,6 @@ export function BudgetUtilization() {
          
         </div>
 
-        {/* Numbers */}
         <div className="flex justify-between items-end">
           <div>
             <p className="text-xs text-muted-foreground tracking-wide">
@@ -37,7 +35,7 @@ export function BudgetUtilization() {
         </div>
 
         {/* Progress */}
-        <Progress value={65.8} className="h-3" />
+        <Progress value={65.8} className="h-3 " />
 
         {/* Bottom row */}
         <div className="flex items-center justify-between text-sm">
