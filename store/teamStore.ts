@@ -1,26 +1,38 @@
-import { create } from "zustand"
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface TeamMember {
-  name: string
-  role: string
-  department: string
-  email: string
+  name: string;
+  role: string;
+  department: string;
+  email: string;
 }
 
 interface TeamStore {
-  team: TeamMember[]
-  setTeam: (members: TeamMember[]) => void
-  addMember: (member: TeamMember) => void
-  resetTeam: () => void
+  team: TeamMember[];
+  setTeam: (members: TeamMember[]) => void;
+  addMember: (member: TeamMember) => void;
+  resetTeam: () => void;
 }
 
-const useTeamStore = create<TeamStore>((set) => ({
-  team: [],
-  
-  setTeam: (members) => set({ team: members }),
-  addMember: (member) =>
-    set((state) => ({ team: [...state.team, member] })),
-  resetTeam: () => set({ team: [] }),
-}))
+const useTeamStore = create<TeamStore>()(
+  persist(
+    (set) => ({
+      team: [],
 
-export default useTeamStore
+      setTeam: (members) => set({ team: members }),
+
+      addMember: (member) =>
+        set((state) => ({
+          team: [...state.team, member],
+        })),
+
+      resetTeam: () => set({ team: [] }),
+    }),
+    {
+      name: "team-storage", // key in localStorage
+    }
+  )
+);
+
+export default useTeamStore;

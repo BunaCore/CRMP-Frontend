@@ -19,7 +19,7 @@ interface FormData {
 
 export default function SignUpForm() {
 
-  const { currentUser, loading, error, signInStart, signInSuccess, signInFailure } = useUserStore()
+  const { error, signInStart, signInSuccess, signInFailure } = useUserStore()
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",

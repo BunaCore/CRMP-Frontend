@@ -1,11 +1,11 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface UserState {
   currentUser: any | null;
   error: string | null;
   loading: boolean;
 
-  // Actions
   signInStart: () => void;
   signInSuccess: (user: any) => void;
   signInFailure: (message: string) => void;
@@ -13,19 +13,37 @@ interface UserState {
   toggleLoading: () => void;
 }
 
-const useUserStore = create<UserState>((set) => ({
-  currentUser: null,
-  error: null,
-  loading: false,
+const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      currentUser: null,
+      error: null,
+      loading: false,
 
-  // User actions
-  signInStart: () => set({ loading: true }),
-  signInSuccess: (user) => set({ currentUser: user, loading: false, error: null }),
-  signInFailure: (message) => set({ error: message, loading: false }),
+      signInStart: () => set({ loading: true }),
 
-  // Loading actions
-  setLoading: (value) => set({ loading: value }),
-  toggleLoading: () => set((state) => ({ loading: !state.loading })),
-}));
+      signInSuccess: (user) =>
+        set({
+          currentUser: user,
+          loading: false,
+          error: null,
+        }),
+
+      signInFailure: (message) =>
+        set({
+          error: message,
+          loading: false,
+        }),
+
+      setLoading: (value) => set({ loading: value }),
+
+      toggleLoading: () =>
+        set((state) => ({ loading: !state.loading })),
+    }),
+    {
+      name: "user-storage", // key in localStorage
+    }
+  )
+);
 
 export default useUserStore;

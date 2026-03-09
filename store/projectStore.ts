@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 interface Project {
   title: string
@@ -10,27 +11,13 @@ interface Project {
 
 interface ProjectStore {
   project: Project
-
   setProject: (data: Partial<Project>) => void
   resetProject: () => void
 }
 
-const useProjectStore = create<ProjectStore>((set) => ({
-  project: {
-    title: "",
-    theme: "",
-    abstract: "",
-    duration: "",
-    startDate: "",
-  },
-
-  setProject: (data) =>
-    set((state) => ({
-      project: { ...state.project, ...data },
-    })),
-
-  resetProject: () =>
-    set({
+const useProjectStore = create<ProjectStore>()(
+  persist(
+    (set) => ({
       project: {
         title: "",
         theme: "",
@@ -38,7 +25,27 @@ const useProjectStore = create<ProjectStore>((set) => ({
         duration: "",
         startDate: "",
       },
+
+      setProject: (data) =>
+        set((state) => ({
+          project: { ...state.project, ...data },
+        })),
+
+      resetProject: () =>
+        set({
+          project: {
+            title: "",
+            theme: "",
+            abstract: "",
+            duration: "",
+            startDate: "",
+          },
+        }),
     }),
-}))
+    {
+      name: "project-storage", // key in localStorage
+    }
+  )
+)
 
 export default useProjectStore
