@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import useProjectStore from "@/store/projectStore"
 
-export default function ProjectDetailsCard({ project, onEdit }) {
+export default function ProjectDetailsCard({ onEdit }) {
+  const project = useProjectStore((state) => state.project);
+
   return (
     <div className="bg-white rounded-lg w-full px-5 py-5 border border-gray-200">
       
@@ -25,29 +28,29 @@ export default function ProjectDetailsCard({ project, onEdit }) {
         <div className="flex gap-20">
           <div>
             <h1 className="font-semibold">Project Title</h1>
-            <p>{project?.title}</p>
+            <p>{project.title}</p>
           </div>
 
           <div>
             <h1 className="font-semibold">Research Theme</h1>
-            <p>{project?.theme}</p>
+            <p>{project.theme}</p>
           </div>
         </div>
 
         <div>
           <h1 className="font-semibold">Abstract</h1>
-          <p>{project?.abstract}</p>
+          <p>{project.abstract}</p>
         </div>
 
         <div className="flex gap-20">
           <div>
             <h1 className="font-semibold">Project Duration</h1>
-            <p>{project?.duration}</p>
+            <p>{project.duration}</p>
           </div>
 
           <div>
             <h1 className="font-semibold">Proposed Start Date</h1>
-            <p>{project?.startDate}</p>
+            <p>{project.startDate}</p>
           </div>
         </div>
 
