@@ -28,7 +28,6 @@ export default function Page() {
               <SectionCards />
             </div>
 
-            {/* Budget Utilization card aligned with SectionCards */}
            <div className="px-4 lg:px-6">
   <div className="w-full overflow-hidden" style={{ transform: "scaleY(0.7)", transformOrigin: "top" }}>
     <BudgetUtilization />
