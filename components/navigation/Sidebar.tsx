@@ -57,16 +57,16 @@ export function Sidebar() {
           return (
             <Link key={item.href} href={item.href}>
               <button
-                className={cn(
-                  'w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-foreground hover:bg-muted'
-                )}
-              >
-                <ItemIcon className="w-4 h-4" />
-                {item.label}
-              </button>
+  className={cn(
+    "w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+    isActive
+      ? "text-primary hover:bg-blue-100"
+      : "text-foreground hover:bg-muted"
+  )}
+>
+  <ItemIcon className="w-4 h-4" />
+  {item.label}
+</button>
             </Link>
           );
         })}

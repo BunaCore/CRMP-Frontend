@@ -77,69 +77,78 @@ export default function ProjectsPage() {
       </Card>
 
       {/* Proposals Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Proposals List</CardTitle>
-          <CardDescription>{filteredProjects.length} proposal(s) found</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {filteredProjects.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No projects found</p>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Researcher</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Submitted</TableHead>
-                  <TableHead>Advisor</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
+<Card className="w-full scale-95">
+  <CardHeader>
+    <CardTitle>Proposals List</CardTitle>
+    <CardDescription>{filteredProjects.length} proposal(s) found</CardDescription>
+  </CardHeader>
+
+  <CardContent className="w-full overflow-hidden">
+    {filteredProjects.length === 0 ? (
+      <div className="text-center py-12">
+        <p className="text-muted-foreground">No projects found</p>
+      </div>
+    ) : (
+      <div className="w-full overflow-x-auto">
+        <Table className="w-full">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Title</TableHead>
+              <TableHead>Researcher</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Submitted</TableHead>
+              <TableHead>Advisor</TableHead>
+              <TableHead className="text-right">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {filteredProjects.map((project) => {
+              const researcher = getUserById(project.researcherId);
+              const advisor = project.advisorId ? getUserById(project.advisorId) : null;
+
+              return (
+                <TableRow key={project.id}>
+                  <TableCell className="max-w-[250px] truncate">
+                    <div>
+                      <p className="font-medium text-foreground truncate">{project.title}</p>
+                      <p className="text-xs text-muted-foreground">{project.id}</p>
+                    </div>
+                  </TableCell>
+
+                  <TableCell className="text-sm">
+                    {researcher?.name || 'Unknown'}
+                  </TableCell>
+
+                  <TableCell>
+                    <StatusBadge status={project.status} />
+                  </TableCell>
+
+                  <TableCell className="text-sm">
+                    {new Date(project.submissionDate).toLocaleDateString()}
+                  </TableCell>
+
+                  <TableCell className="text-sm">
+                    {advisor ? advisor.name : <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+
+                  <TableCell className="text-right">
+                    <Link href={`/coordinator/projects/${project.id}`}>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Eye className="w-4 h-4" />
+                        Review
+                      </Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredProjects.map((project) => {
-                  const researcher = getUserById(project.researcherId);
-                  const advisor = project.advisorId ? getUserById(project.advisorId) : null;
-                  
-                  return (
-                    <TableRow key={project.id}>
-                      <TableCell>
-                        <div>
-                          <p className="font-medium text-foreground">{project.title}</p>
-                          <p className="text-xs text-muted-foreground">{project.id}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {researcher?.name || 'Unknown'}
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge status={project.status} />
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {new Date(project.submissionDate).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {advisor ? advisor.name : <span className="text-muted-foreground">—</span>}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Link href={`/coordinator/projects/${project.id}`}>
-                          <Button variant="outline" size="sm" className="gap-2">
-                            <Eye className="w-4 h-4" />
-                            Review
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    )}
+  </CardContent>
+</Card>
     </div>
   );
 }
