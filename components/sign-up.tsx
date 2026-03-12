@@ -105,7 +105,7 @@ export default function SignUpForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
-      <Card className="w-full max-w-4xl overflow-hidden grid lg:grid-cols-2">
+      <Card className="w-full max-w-4xl overflow-hidden grid lg:grid-cols-2 py-0">
 
         {/* Left Image */}
         <div className="hidden lg:block relative h-full bg-muted">
