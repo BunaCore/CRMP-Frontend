@@ -3,8 +3,20 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import useUserStore from '@/store/userStore'
+import useUserStore from "@/store/userStore";
 
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface FormData {
   fullname: string;
@@ -13,13 +25,12 @@ interface FormData {
   confirmPassword: string;
   universityId: string;
   department: string;
-  role:string;
-
+  role: string;
 }
 
 export default function SignUpForm() {
+  const { error, signInStart, signInSuccess, signInFailure } = useUserStore();
 
-  const { error, signInStart, signInSuccess, signInFailure } = useUserStore()
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",
@@ -27,13 +38,12 @@ export default function SignUpForm() {
     confirmPassword: "",
     universityId: "",
     department: "",
-    role:"",
-    
+    role: "",
   });
 
-  const [formerror, setFormError] = useState<string>("");
+  const [formerror, setFormError] = useState("");
 
- const handleChange = (
+  const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
@@ -41,220 +51,191 @@ export default function SignUpForm() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault()
+    e.preventDefault();
+    setFormError("");
 
-  
-  setFormError("")
-
-  // --- Local validation ---
-  if (!formData.fullname || !formData.email || !formData.password) {
-    return setFormError("Name, email and password are required")
-  }
-
-  if (formData.password.length < 6) {
-    return setFormError("Password must be at least 6 characters")
-  }
-
-  if (!formData.email.includes("@")) {
-    return setFormError("Enter a valid email")
-  }
-
-  if (formData.password !== formData.confirmPassword) {
-    return setFormError("Passwords do not match")
-  }
-
-  // --- Global store: start loading ---
-  signInStart()
-
-  try {
-    
-    const res = await fetch('/api/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    })
-    const data = await res.json()
-
-    if (!res.ok) {
-     
-      signInFailure(data.message || "Signup failed")
-    } else {
-      
-      signInSuccess(data.user)
-
-      
-      setFormData({
-        fullname: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        universityId: "",
-        department: "",
-        role: "",
-      })
-
-      setFormError("") 
-      alert("Registration successful!")
+    if (!formData.fullname || !formData.email || !formData.password) {
+      return setFormError("Name, email and password are required");
     }
-  } catch (err: any) {
-    signInFailure(err.message || "Network error")
-  }
-}
+
+    if (formData.password.length < 6) {
+      return setFormError("Password must be at least 6 characters");
+    }
+
+    if (!formData.email.includes("@")) {
+      return setFormError("Enter a valid email");
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      return setFormError("Passwords do not match");
+    }
+
+    signInStart();
+
+    try {
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        signInFailure(data.message || "Signup failed");
+      } else {
+        signInSuccess(data.user);
+
+        setFormData({
+          fullname: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          universityId: "",
+          department: "",
+          role: "",
+        });
+
+        alert("Registration successful!");
+      }
+    } catch (err: any) {
+      signInFailure(err.message || "Network error");
+    }
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-      <div className="sm:w-[400px] md:w-[500px] lg:w-[1000px] h-auto lg:h-[600px] border border-black bg-white rounded-xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
+    <div className="flex items-center justify-center min-h-screen bg-white p-4">
+      <Card className="w-full max-w-4xl overflow-hidden grid lg:grid-cols-2">
 
-        <div className="hidden lg:block lg:w-1/2 relative">
+        {/* Left Image */}
+        <div className="hidden lg:block relative h-full bg-muted">
           <Image
             src="/group.png"
-            alt="SignUp Image"
+            alt="signup"
             fill
             className="object-cover"
-            
           />
-           <div className="absolute bottom-8 left-6 text-white">
-              
-              <p className="mt-2 text-gray-500">Join the Adama Science and Technology University
-                    research community Collaborate. innovate , and manage your projects efficiently</p>
-            </div>
+        </div>
 
-             <div className="absolute bottom-35 left-6 text-white">
-              <p className="text-2xl font-bold   ">Advancing Science and Technolgy through collaboration</p>
-            </div>
+        {/* Form */}
+        <div className="flex flex-col p-6 lg:p-8 pr-8 lg:pr-12">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-2xl">Join the Research Community</CardTitle>
+            <CardDescription>
+              Create an account to collaborate and manage projects.
+            </CardDescription>
+          </CardHeader>
 
-           <div className="absolute top-5 left-6 flex items-center gap-3 text-white">
-              <Image
-                src="/ASTU.jpg"
-                alt="Astu"
-                width={40}
-                height={40}
-                className="rounded-full object-cover"
-              />
-              <p className="text-base">CRMP ASTU</p>
-            </div>
-           </div>
+          <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
+            <CardContent className="space-y-4 p-0">
 
-        {/*form*/}
-
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center p-6 lg:p-8">
-          <div className="mb-4 text-center lg:text-left w-full">
-            <h1 className="text-2xl font-bold mb-2">Join the Research Community</h1>
-            
-          </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 w-full max-w-md"
-          >
-            {/* Full Name */}
-            <label className="flex flex-col w-full">
-              <span className="text-gray-700 text-sm mb-1 font-bold">Full Name </span>
-              <input
-                type="text"
-                name="name"
-                value={formData.fullname}
-                onChange={handleChange}
-                className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-              />
-            </label>
-
-            {/* Optional fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">Department</span>
-                <input
-                  type="text"
-                  name="department"
-                  value={formData.department}
+              {/* Full name */}
+              <div className="space-y-2">
+                <Label>Full Name</Label>
+                <Input
+                  name="fullname"
+                  value={formData.fullname}
                   onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                  className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
                 />
-              </label>
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">University ID</span>
-                <input
-                  type="text"
-                  name="universityId"
-                  value={formData.universityId}
-                  onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"/>
-              </label>
-            </div>
+              </div>
 
-            {/* Email */}
-            <label className="flex flex-col w-full">
-              <span className="text-gray-700 text-sm mb-1 font-bold">Email </span>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]" />
-            </label>
+              {/* Department + ID */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Department</Label>
+                  <Input
+                    name="department"
+                    value={formData.department}
+                    onChange={handleChange}
+                    className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                  />
+                </div>
 
-            {/* Passwords */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">Password </span>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
+                <div className="space-y-2">
+                  <Label>University ID</Label>
+                  <Input
+                    name="universityId"
+                    value={formData.universityId}
+                    onChange={handleChange}
+                    className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                  />
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="space-y-2">
+                <Label>Email</Label>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                  className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
                 />
-              </label>
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">Confirm Password </span>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
+              </div>
+
+              {/* Passwords */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Password</Label>
+                  <Input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Confirm Password</Label>
+                  <Input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                  />
+                </div>
+              </div>
+
+              {/* Role */}
+              <div className="space-y-2">
+                <Label>Role</Label>
+                <select
+                  name="role"
+                  value={formData.role}
                   onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-                />
-              </label>
-            </div>
+                  className="border-[#F8FBFC] rounded-lg shadow-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] h-10 px-3"
+                >
+                  <option value="">Select role</option>
+                  <option value="undergraduate">Undergraduate</option>
+                  <option value="postgraduate">Postgraduate</option>
+                  <option value="principal">Principal Investigator</option>
+                </select>
+              </div>
 
-            <label className="flex flex-col w-full">
-              <span className="text-gray-700 text-sm mb-1 font-bold">Role</span>
+              {(formerror || error) && (
+                <p className="text-red-500 text-sm">{formerror || error}</p>
+              )}
 
-             <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full border h-10 p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-            >
-               <option value="" disabled>
-                Select role
-              </option>
-              <option value="undergraduate">Undergraduate</option>
-              <option value="postgraduate">Postgraduate</option>
-              <option value="principal">Principal Investigator</option>
-            </select>
-            </label>
+            </CardContent>
 
-
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-
-            <button
-              type="submit"
-              className="w-full bg-[#13DAEC] p-2 rounded hover:opacity-75 mt-2"
-            >
-              Create Account
-            </button>
-
-            <div className="text-center text-base ">
-              Already have an account?{" "}
-              <Link href="/login" className="text-[#13DAEC] font-bold">
-                Login
-              </Link>
-              <p  className="mt-2 text-gray-600 text-xs">By creating an account you agree to our terms & conditions and privacy policy</p>
-            </div>
+            <CardFooter className="flex flex-col gap-2 pt-4">
+              <Button type="submit" className="bg-[#13DAEC] w-full">
+                Create Account
+              </Button>
+              <p className="text-sm text-center text-muted-foreground">
+                Already have an account?{" "}
+                <Link href="/login" className="text-primary font-medium">
+                  Login
+                </Link>
+              </p>
+            </CardFooter>
           </form>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
