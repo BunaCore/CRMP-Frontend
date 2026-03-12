@@ -11,7 +11,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-<div className="flex flex-col">
+<div className="flex flex-col ">
   <h1 className="text-base font-medium">Welcome back, Dr. Abebe</h1>
   <p className="text-sm text-gray-400 font-light">
     Here is what is happening with your research today.

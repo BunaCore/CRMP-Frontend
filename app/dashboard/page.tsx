@@ -18,7 +18,7 @@ export default function Page() {
       style={
         {
           "--sidebar-width": "calc(var(--spacing) * 65)",
-          "--header-height": "calc(var(--spacing) * 12)",
+          "--header-height": "calc(var(--spacing) * 20)",
         } as React.CSSProperties
       }
     >
@@ -36,11 +36,11 @@ export default function Page() {
             </div>
 
             {/* Budget Utilization */}
-            <div className="px-4 lg:px-6">
+            <div className="px-20 lg:px-6">
               <div
                 className="w-full"
                 style={{
-                  transform: "scaleY(0.8)",
+                  transform: "scaleY(0.)",
                   transformOrigin: "top",
                 }}
               >

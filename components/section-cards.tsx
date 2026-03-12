@@ -15,10 +15,8 @@ export function SectionCards() {
     <div className="flex gap-4 px-4 overflow-x-auto *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 dark:*:data-[slot=card]:bg-card ">
       <Card className="@container/card flex-1 min-w-[12rem]">
         <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
-          </CardTitle>
+          <IconArrowUp/>
+         
           <CardAction>
             <Badge variant="outline">
               <IconArrowUp />
@@ -27,10 +25,10 @@ export function SectionCards() {
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="line-clamp-1 flex gap-2  font-light">
             Active Projects
                       </div>
-          <div className="text-muted-foreground">
+          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             8
           </div>
         </CardFooter>
@@ -38,9 +36,7 @@ export function SectionCards() {
       <Card className="@container/card flex-1 min-w-[12rem]">
         <CardHeader>
           
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
-          </CardTitle>
+          
           <CardAction>
             <Badge variant="outline">
               <IconTrendingDown />
@@ -49,19 +45,17 @@ export function SectionCards() {
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="line-clamp-1 flex gap-2  font-light">
             Pending Approvals<IconTrendingDown className="size-4" />
           </div>
-          <div className="text-muted-foreground">
-            Acquisition needs attention
+          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            3
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card flex-1 min-w-[12rem]">
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
-          </CardTitle>
+          
           <CardAction>
             <Badge variant="outline">
               <IconTrendingUp />
@@ -70,10 +64,10 @@ export function SectionCards() {
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Total Grant<IconTrendingUp className="size-4" />
+          <div className="line-clamp-1 flex gap-2 font-light">
+            Total Grant (ETB)<IconTrendingUp className="size-4" />
           </div>
-          <div className="text-muted-foreground">2.5 m</div>
+          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">2.5 m</div>
         </CardFooter>
       </Card>
       <Card className="@container/card flex-1 min-w-[12rem]">
@@ -90,10 +84,11 @@ export function SectionCards() {
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="line-clamp-1 flex gap-2 Deadlines this Week
+">
             Deadlines this Week<IconTrendingUp className="size-4" />
           </div>
-          <div className="text-muted-foreground">2</div>
+          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">2</div>
         </CardFooter>
       </Card>
     </div>

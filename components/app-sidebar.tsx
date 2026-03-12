@@ -32,7 +32,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-
+ import Image from "next/image" 
 const data = {
   user: {
     name: "Natnael Tilahun",
@@ -140,7 +140,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
               <a href="#">
-                <IconInnerShadowTop className="size-5!" />
+                <Image
+  src="/logo.jpg"
+  alt="ASTU CRMP Logo"
+  width={32}
+  height={32}
+  className="w-8 h-8"
+/>
                 <span className="">ASTU CRMP 
                   <p className="text-xs text-muted-foreground"> Resarch Portal</p>
 
