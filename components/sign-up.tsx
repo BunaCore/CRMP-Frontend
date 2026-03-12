@@ -105,25 +105,43 @@ export default function SignUpForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
-      <Card className="w-full max-w-4xl overflow-hidden grid lg:grid-cols-2 py-0">
+      <Card className="w-[740px] overflow-hidden grid lg:grid-cols-2 py-0">
 
         {/* Left Image */}
-        <div className="hidden lg:block relative h-full bg-muted">
-          <Image
-            src="/group.png"
-            alt="signup"
-            fill
-            className="object-cover"
-          />
-        </div>
+      <div className="hidden lg:block relative h-full bg-muted">
+            <Image
+              src="/group.png"
+              alt="signup"
+              fill
+              className="object-cover"
+            />
+      <div className="absolute top-0 left-0 p-6 text-white flex items-center gap-3">
+            <Image
+              src="/ASTU.jpg"
+              alt="logo"
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
+            />
+            <h1 className="font-semibold text-lg">CRMP ASTU</h1>
+          </div>
 
+          {/* Bottom text */}
+          <div className="absolute bottom-0 left-0 p-6 text-white">
+            <h1 className="text-xl font-semibold">
+              Advancing Science and Technology Through Collaboration
+            </h1>
+
+            <p className="text-sm text-gray-100 mt-2">
+              Join the Adama Science and Technology University research community.
+              Collaborate, innovate, and manage your projects efficiently.
+            </p>
+          </div>
+      </div>
         {/* Form */}
         <div className="flex flex-col p-6 lg:p-8 pr-8 lg:pr-12">
-          <CardHeader className="pb-4">
+          <CardHeader className="p-0 pb-4">
             <CardTitle className="text-2xl">Join the Research Community</CardTitle>
-            <CardDescription>
-              Create an account to collaborate and manage projects.
-            </CardDescription>
           </CardHeader>
 
           <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
@@ -228,7 +246,7 @@ export default function SignUpForm() {
               </Button>
               <p className="text-sm text-center text-muted-foreground">
                 Already have an account?{" "}
-                <Link href="/login" className="text-primary font-medium">
+                <Link href="/login" className="text-[#13DAEC] font-medium">
                   Login
                 </Link>
               </p>

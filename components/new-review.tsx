@@ -98,7 +98,7 @@ export default function NewReview() {
     <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50">
 
       {/* Sidebar - hidden on small/medium screens */}
-      <Card className="hidden lg:flex w-full lg:w-64 shadow-lg px-4 lg:px-6 pt-8 lg:pt-20 flex-col gap-4">
+      <Card className="hidden lg:flex w-full lg:w-64 shadow-lg px-2 md:px-4 lg:px-6 py-0 flex-col gap-4">
         <CardHeader className="pb-2">
           <CardTitle className="text-2xl font-bold">ASTU Research</CardTitle>
           <CardDescription className="text-gray-400 text-sm">
@@ -158,14 +158,14 @@ export default function NewReview() {
         <TableReview onEdit={() => console.log("edit clicked")} />
 
         {/* Submission Card */}
-        <Card className="rounded-md p-4 sm:p-6 mt-4 sm:mt-6 border border-gray-200">
+        <Card className="rounded-md p-4 sm:p-6 mt-4 sm:mt-6 border border-gray-200 py-0">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <Checkbox id="certify" />
             <label htmlFor="certify" className="font-semibold text-sm sm:text-base">
               I certify that the information provided is accurate.
             </label>
           </div>
-          <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-3">
+          <p className="text-gray-600 text-xs sm:text-sm ">
             By checking this box, I confirm that this proposal adheres to all ASTU research guidelines and ethical standards.
           </p>
 
