@@ -4,76 +4,83 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import useDocumentStore from "@/store/documentStore";
-import useUserStore from "@/store/userStore";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import useUserStore from '@/store/userStore'
 
-interface TableReviewProps {
-  onEdit: () => void;
-}
-
-export default function TableReview({ onEdit }: TableReviewProps) {
+export default function TableReview({ onEdit }) {
   const [isOpen, setIsOpen] = useState(false);
   const { documents } = useDocumentStore(); 
-  const { loading } = useUserStore();
+  const {loading,setLoading} = useUserStore()
 
   return (
-    <Card className="w-full border border-gray-200">
+    <div className="w-full flex flex-col gap-2">
+
       {/* Header */}
-      <CardHeader
-        className="flex justify-between items-center cursor-pointer"
+      <div
+        className="bg-white border border-gray-200 w-full h-25 flex justify-between items-center rounded-2xl px-4 cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-2">
           <Image src="/banknote.svg" alt="banknote" width={30} height={30} />
-          <CardTitle className="lg:text-2xl text-xl font-bold">Budget & Timeline</CardTitle>
+          <h1 className="lg:text-2xl md:text-xl text-base font-bold">Budget & Timeline</h1>
         </div>
 
-        <div className="flex items-center gap-2 text-gray-600">
-          <span>Click to {isOpen ? "collapse" : "expand"}</span>
-          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        <div className="flex items-center gap-2">
+          <span className="lg:text-base sm:text-sm">Click to {isOpen ? "collapse" : "expand"}</span>
+          {isOpen ? (
+            <ChevronUp size={20} className="text-gray-600" />
+          ) : (
+            <ChevronDown size={20} className="text-gray-600" />
+          )}
         </div>
-      </CardHeader>
+      </div>
 
       {isOpen && (
-        <CardContent className="flex flex-col gap-4">
-          {/* Documents Header */}
-          <div className="flex justify-between items-center border-b pb-4">
-            <CardTitle className="lg:text-2xl text-xl font-bold">Uploaded Documents</CardTitle>
-            <Button variant="link" onClick={onEdit} className="flex items-center gap-1 text-[#13DAEC] font-bold">
+        <>
+          <div className="w-full h-25 border border-gray-200 rounded-t-md border-b-0 py-10 px-12 bg-white flex justify-between items-center">
+            <h1 className="lg:text-2xl text-xl font-bold">Uploaded Documents</h1>
+
+            <div
+              className="flex items-center gap-1 cursor-pointer"
+              onClick={onEdit}
+            >
               <Image src="/pencil.svg" alt="edit" width={20} height={20} />
-              Edit
-            </Button>
+              <p className="text-[#13DAEC] font-bold">Edit</p>
+            </div>
           </div>
 
-          {/* Document List */}
           {loading ? (
-            <p className="text-gray-500">Loading documents...</p>
+            <p className="px-12 py-4 text-gray-500">Loading documents...</p>
           ) : documents.length === 0 ? (
-            <p className="text-gray-500">No documents uploaded yet.</p>
+            <div className="border border-gray-700 rounded-md">
+              <p className="px-12 py-4 text-gray-500">No documents uploaded yet.</p>
+            </div>
           ) : (
-            <div className="flex flex-col gap-4">
+            <div className="bg-white rounded-b-md border border-gray-700 w-full flex flex-col py-5 px-12 gap-4 -mt-6">
               {documents.map((doc, index) => (
-                <Card key={index} className="p-4 flex justify-between items-center">
-                  <div className="flex items-center gap-4">
-                    <Image src={doc.fileIcon} alt="file" width={40} height={40} />
-                    <div className="flex flex-col">
+                <div
+                  key={index}
+                  className="border border-gray-700 w-full h-30 rounded-lg p-4 flex justify-between"
+                >
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                      <Image src={doc.fileIcon} alt="file" width={40} height={40} />
                       <p>{doc.fileName}</p>
-                      <p className="text-gray-400 text-sm">{doc.size} uploaded just now</p>
                     </div>
+                    <p className="text-gray-400 text-sm">{doc.size} uploaded just now</p>
                   </div>
+
                   {doc.verified && (
-                    <div className="flex items-center gap-2 text-[#24e916]">
+                    <div className="flex items-center gap-2">
                       <Image src="/check.svg" alt="check" width={30} height={30} />
-                      <p>Verified</p>
+                      <p className="text-[#24e916]">verified</p>
                     </div>
                   )}
-                </Card>
+                </div>
               ))}
             </div>
           )}
-        </CardContent>
+        </>
       )}
-    </Card>
+    </div>
   );
 }

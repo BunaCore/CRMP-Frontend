@@ -9,7 +9,7 @@ export default function NavBudget() {
 
   return(
 
-       <nav className="fixed flex items-center justify-between py-3 lg:px-20 md:px-10 top-0 w-full h-16 bg-white shadow-md">
+       <nav className="fixed flex items-center justify-between py-3 lg:px-20  px-5 top-0 w-full h-16 bg-white shadow-md">
 
             <li className="flex items-center gap-1">
                   <BookOpenIcon className="h-6 w-6 text-gray-700" />

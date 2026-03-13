@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
-import { ChevronDown, ArrowLeft, ChevronUp } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import TeamReview from "@/components/team-review";
 import TableReview from "@/components/table-review";
 import ProjectDetail from "@/components/project-detail";
@@ -12,20 +12,19 @@ import useProjectStore from "@/store/projectStore";
 import useUserStore from "@/store/userStore";
 import useTeamStore from "@/store/teamStore";
 import useDocumentStore from "@/store/documentStore";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export default function NewReview() {
   const { currentUser, loading, error, setLoading } = useUserStore();
   const { setProject } = useProjectStore();
   const { setTeam } = useTeamStore();
   const { documents, setDocuments } = useDocumentStore();
+
   const { id } = useParams();
 
-  // Fetch project
+  // fetch project
   useEffect(() => {
-    if (!id) return;
     const fetchProject = async () => {
       try {
         const res = await fetch(`/api/projects/${id}`);
@@ -36,12 +35,11 @@ export default function NewReview() {
         console.error(err);
       }
     };
-    fetchProject();
-  }, [id, setProject]);
+    if (id) fetchProject();
+  }, [id]);
 
-  // Fetch team
+  // fetch team
   useEffect(() => {
-    if (!id) return;
     const fetchTeam = async () => {
       try {
         const res = await fetch(`/api/projects/${id}/team`);
@@ -52,12 +50,11 @@ export default function NewReview() {
         console.error(err);
       }
     };
-    fetchTeam();
+    if (id) fetchTeam();
   }, [id, setTeam]);
 
-  // Fetch documents
+  // fetch documents
   useEffect(() => {
-    if (!id) return;
     const fetchDocuments = async () => {
       try {
         setLoading(true);
@@ -71,12 +68,15 @@ export default function NewReview() {
         setLoading(false);
       }
     };
-    fetchDocuments();
+    if (id) fetchDocuments();
   }, [id, setDocuments, setLoading]);
 
+  // submit proposal
   const handleSubmitProposal = async () => {
     try {
-      const res = await fetch(`/api/projects/${id}/submit`, { method: "POST" });
+      const res = await fetch(`/api/projects/${id}/submit`, {
+        method: "POST",
+      });
       if (!res.ok) throw new Error("Submission failed");
       console.log("Proposal submitted");
     } catch (err) {
@@ -84,9 +84,12 @@ export default function NewReview() {
     }
   };
 
+  // save draft
   const handleSaveDraft = async () => {
     try {
-      const res = await fetch(`/api/projects/${id}/draft`, { method: "POST" });
+      const res = await fetch(`/api/projects/${id}/draft`, {
+        method: "POST",
+      });
       if (!res.ok) throw new Error("Failed to save draft");
       console.log("Draft saved");
     } catch (err) {
@@ -95,100 +98,120 @@ export default function NewReview() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50">
+    <div className="min-h-screen w-full bg-gray-50 flex flex-col lg:flex-row pt-14 sm:pt-16 overflow-x-hidden">
 
-      {/* Sidebar - hidden on small/medium screens */}
-      <Card className="hidden lg:flex w-full lg:w-64 shadow-lg px-2 md:px-4 lg:px-6 py-0 flex-col gap-4">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-2xl font-bold">ASTU Research</CardTitle>
-          <CardDescription className="text-gray-400 text-sm">
+      {/* Sidebar */}
+      <div className="hidden lg:flex bg-white w-64 shrink-0 shadow-lg p-6 flex-col gap-4">
+        <h2 className="text-2xl font-bold">
+          ASTU Research{" "}
+          <span className="text-gray-400 text-base">
             Management Platform
-          </CardDescription>
-        </CardHeader>
+          </span>
+        </h2>
 
         <nav className="flex flex-col gap-1">
-          {[
-            { icon: "/dashboardreview.svg", label: "Dashboard" },
-            { icon: "/circlereview.svg", label: "New Proposal" },
-            { icon: "/folderreview.svg", label: "My Projects" },
-            { icon: "/settingsreview.svg", label: "Settings" },
-          ].map((item) => (
-            <Button
-              key={item.label}
-              variant="ghost"
-              className="justify-start gap-2 px-3 py-2 hover:bg-[#13DAEC]"
-            >
-              <Image src={item.icon} alt="" width={30} height={30} />
-              {item.label}
-            </Button>
-          ))}
+          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
+            <Image src="/dashboardreview.svg" alt="" width={30} height={30} />
+            <p>Dashboard</p>
+          </div>
+
+          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
+            <Image src="/circlereview.svg" alt="" width={30} height={30} />
+            <p>New Proposal</p>
+          </div>
+
+          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
+            <Image src="/folderreview.svg" alt="" width={30} height={30} />
+            <p>My Projects</p>
+          </div>
+
+          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
+            <Image src="/settingsreview.svg" alt="" width={30} height={30} />
+            <p>Settings</p>
+          </div>
         </nav>
 
-        <CardContent className="mt-auto border border-gray-200 rounded-lg p-4">
+        {/* Help box */}
+        <div className="mt-auto bg-white border border-gray-200 rounded-lg p-4">
           <p className="font-semibold text-gray-700 text-sm">Need help?</p>
           <p className="text-[#13DAEC] text-sm font-bold py-1 cursor-pointer">
             Contact Support
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col gap-6 p-4 sm:p-6 md:p-8 lg:pt-10 md:pt-27">
+      <div className="flex-1 w-full px-4 sm:px-6 md:px-10 lg:px-16 pt-10 sm:pt-12 flex flex-col gap-6">
 
-        {/* Page Heading */}
-        <div className="mb-4 sm:mb-6 lg:pt-20">
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">
+        {/* Heading */}
+        <div>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
             Review Your Proposal
           </h1>
-          <p className="text-gray-500 text-sm sm:text-base lg:text-lg">
-            Please review all details to ensure accuracy. You can edit specific sections if needed before final submission.
+
+          <p className="text-muted-foreground text-sm sm:text-base">
+            Please review all details to ensure accuracy. You can edit
+            specific sections if needed before final submission.
           </p>
         </div>
 
         {/* Stepper */}
         <Stepper activeStep="Review" />
 
-        {/* Project Detail */}
+        {/* Project Details */}
         <ProjectDetail onEdit={() => console.log("edit project")} />
 
-        {/* Team Review */}
+        {/* Team */}
         <TeamReview />
 
-        {/* Budget / Table */}
+        {/* Budget */}
         <TableReview onEdit={() => console.log("edit clicked")} />
 
-        {/* Submission Card */}
-        <Card className="rounded-md p-4 sm:p-6 mt-4 sm:mt-6 border border-gray-200 py-0">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-            <Checkbox id="certify" />
-            <label htmlFor="certify" className="font-semibold text-sm sm:text-base">
+        {/* Submit Section */}
+        <div className="w-full mt-5 rounded-md bg-white p-4 sm:p-6 md:p-8 border border-gray-200 mb-5">
+
+          <div className="flex items-start gap-3">
+            <Input
+              type="checkbox"
+              className="mt-1 w-4 h-4 cursor-pointer"
+            />
+            <h1 className="font-semibold">
               I certify that the information provided is accurate.
-            </label>
+            </h1>
           </div>
-          <p className="text-gray-600 text-xs sm:text-sm ">
-            By checking this box, I confirm that this proposal adheres to all ASTU research guidelines and ethical standards.
+
+          <p className="text-gray-400 mt-2 text-sm sm:text-base">
+            By checking this box, I confirm that this proposal adheres
+            to all ASTU research guidelines and ethical standards.
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-4 sm:mt-5">
-            <Button variant="link" className="flex items-center gap-2 text-sm sm:text-base">
-              <ArrowLeft size={18} />
-              Back to documents
-            </Button>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 py-5">
 
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-              <Button variant="outline" className="w-full sm:w-auto" onClick={handleSaveDraft}>
+            <span className="flex items-center gap-2 cursor-pointer">
+              <ArrowLeft size={20} />
+              <p className="text-gray-700 text-sm sm:text-base">
+                Back to documents
+              </p>
+            </span>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full md:w-auto">
+              <Button
+                onClick={handleSaveDraft}
+                className="bg-gray-200 px-4 py-3 rounded w-full sm:w-auto"
+              >
                 Save as draft
               </Button>
+
               <Button
-                className="bg-[#13DAEC] w-full sm:w-auto text-white hover:bg-[#0fb5d6]"
                 onClick={handleSubmitProposal}
+                className="bg-[#13DAEC] px-4 py-3 rounded w-full sm:w-auto"
               >
                 Submit proposal
               </Button>
             </div>
-          </div>
-        </Card>
 
+          </div>
+        </div>
       </div>
     </div>
   );
