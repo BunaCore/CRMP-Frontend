@@ -38,7 +38,7 @@ export default function NewBudget() {
   };
 
   return (
-    <div className="flex flex-col gap-6 px-4 sm:px-6 md:px-10 lg:px-16 pt-24 pb-10 overflow-x-hidden">
+    <div className="flex flex-col gap-6 px-4 sm:px-10 md:px-15 lg:px-25 pt-24 pb-10 overflow-x-hidden">
 
       {/* Stepper */}
       <div className="w-full mb-6">

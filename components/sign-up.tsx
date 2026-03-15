@@ -105,15 +105,14 @@ export default function SignUpForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
-      <Card className="lg:w-[740px] md:w-[500px] overflow-hidden grid lg:grid-cols-2 py-0">
+      <Card className="md:w-[740px] w-full overflow-hidden grid md:grid-cols-2 py-0">
 
         {/* Left Image */}
-      <div className="hidden lg:block relative h-full bg-muted">
-            <Image
+      <div className="hidden md:block relative h-full bg-muted">
+            <img
               src="/group.png"
               alt="signup"
-              fill
-              className="object-cover"
+              className="absolute h-full w-full object-cover"
             />
       <div className="absolute top-0 left-0 p-6 text-white flex items-center gap-3">
             <Image
