@@ -1,10 +1,15 @@
-import { IconArrowUp, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
+"use client"
+
+import {
+  IconArrowUp,
+  IconTrendingDown,
+  IconTrendingUp,
+} from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardAction,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -12,85 +17,110 @@ import {
 
 export function SectionCards() {
   return (
-    <div className="flex gap-4 px-4 overflow-x-auto *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 dark:*:data-[slot=card]:bg-card ">
-      <Card className="@container/card flex-1 min-w-[12rem]">
-        <CardHeader>
-          <IconArrowUp/>
-         
+    <div className="
+      px-4 lg:px-6
+      grid gap-4
+      sm:grid-cols-2
+      lg:grid-cols-4
+    ">
+
+      {/* CARD 1 */}
+      <Card className="flex flex-col justify-between bg-gradient-to-t from-primary/5 to-card shadow-xs">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <IconArrowUp className="size-5 text-muted-foreground" />
+
           <CardAction>
-            <Badge variant="outline">
-              <IconArrowUp />
+            <Badge variant="outline" className="flex items-center gap-1">
+              <IconArrowUp className="size-3" />
               +12.5%
             </Badge>
           </CardAction>
         </CardHeader>
+
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2  font-light">
+          <div className="flex gap-2 font-light text-muted-foreground">
             Active Projects
-                      </div>
-          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          </div>
+
+          <div className="text-2xl lg:text-3xl font-semibold tabular-nums">
             8
           </div>
         </CardFooter>
       </Card>
-      <Card className="@container/card flex-1 min-w-[12rem]">
-        <CardHeader>
-          
-          
+
+      {/* CARD 2 */}
+      <Card className="flex flex-col justify-between bg-gradient-to-t from-primary/5 to-card shadow-xs">
+        <CardHeader className="flex flex-row items-center justify-end">
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown />
+            <Badge variant="outline" className="flex items-center gap-1">
+              <IconTrendingDown className="size-3" />
               -20%
             </Badge>
           </CardAction>
         </CardHeader>
+
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2  font-light">
-            Pending Approvals<IconTrendingDown className="size-4" />
+          <div className="flex gap-2 font-light text-muted-foreground">
+            Pending Approvals
+            <IconTrendingDown className="size-4" />
           </div>
-          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+
+          <div className="text-2xl lg:text-3xl font-semibold tabular-nums">
             3
           </div>
         </CardFooter>
       </Card>
-      <Card className="@container/card flex-1 min-w-[12rem]">
-        <CardHeader>
-          
+
+      {/* CARD 3 */}
+      <Card className="flex flex-col justify-between bg-gradient-to-t from-primary/5 to-card shadow-xs">
+        <CardHeader className="flex flex-row items-center justify-end">
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
+            <Badge variant="outline" className="flex items-center gap-1">
+              <IconTrendingUp className="size-3" />
               +12.5%
             </Badge>
           </CardAction>
         </CardHeader>
+
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-light">
-            Total Grant (ETB)<IconTrendingUp className="size-4" />
+          <div className="flex gap-2 font-light text-muted-foreground">
+            Total Grant (ETB)
+            <IconTrendingUp className="size-4" />
           </div>
-          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">2.5 m</div>
+
+          <div className="text-2xl lg:text-3xl font-semibold tabular-nums">
+            2.5M
+          </div>
         </CardFooter>
       </Card>
-      <Card className="@container/card flex-1 min-w-[12rem]">
-        <CardHeader>
-          
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+
+      {/* CARD 4 */}
+      <Card className="flex flex-col justify-between bg-gradient-to-t from-primary/5 to-card shadow-xs">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-2xl lg:text-3xl font-semibold">
             4.5%
           </CardTitle>
+
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
+            <Badge variant="outline" className="flex items-center gap-1">
+              <IconTrendingUp className="size-3" />
               +4.5%
             </Badge>
           </CardAction>
         </CardHeader>
+
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 Deadlines this Week
-">
-            Deadlines this Week<IconTrendingUp className="size-4" />
+          <div className="flex gap-2 font-light text-muted-foreground">
+            Deadlines this Week
+            <IconTrendingUp className="size-4" />
           </div>
-          <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">2</div>
+
+          <div className="text-2xl lg:text-3xl font-semibold tabular-nums">
+            2
+          </div>
         </CardFooter>
       </Card>
+
     </div>
   )
 }

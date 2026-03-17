@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import * as React from "react"
 import {
@@ -34,7 +34,7 @@ const data = {
   },
   navMain: [
     { title: "Dashboard", url: "#", icon: IconDashboard },
-    { title: "New Proposal", url: "/draft", icon: IconPlus },
+    { title: "New Proposal", url: "#", icon: IconPlus },
     { title: "My Projects", url: "#", icon: IconFolder },
     { title: "Grants", url: "#", icon: IconDashboard },
     { title: "Team", url: "#", icon: IconUsers },
@@ -54,7 +54,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
     isActive: active === item.title,
     onClick: () => {
       setActive(item.title)
-      setOpen(false) // close on mobile after click
+      setOpen(false) // close mobile sidebar on click
     },
   }))
 
@@ -69,13 +69,14 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         <span className="font-semibold text-sm">ASTU CRMP</span>
       </div>
 
-      {/* SIDEBAR */}
+      {/* FIXED SIDEBAR */}
       <Sidebar
         collapsible="icon"
         className={`
-          fixed lg:static z-40 h-full
+          fixed top-0 left-0 h-full w-64 z-50
+          bg-white border-r border-gray-200
           transition-transform duration-300
-          ${open ? "translate-x-0" : "-translate-x-full"}
+          ${open ? "translate-x-0" : "-translate-x-full"} 
           lg:translate-x-0
         `}
         {...props}
@@ -117,10 +118,10 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         </SidebarFooter>
       </Sidebar>
 
-      {/* OVERLAY (mobile) */}
+      {/* OVERLAY (mobile only) */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/30 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/30 z-40 lg:hidden"
           onClick={() => setOpen(false)}
         />
       )}
