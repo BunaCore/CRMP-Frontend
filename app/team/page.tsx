@@ -1,9 +1,8 @@
-// app/proposals/new/team-selection/TeamSelectionClient.tsx
 'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -12,13 +11,11 @@ import {
   Info, 
   Lock, 
   Trash2, 
-  Bell, 
   ChevronDown,
   User,
   Users
 } from 'lucide-react'
 
-// Types
 interface TeamMember {
   id: string
   name: string
@@ -29,123 +26,95 @@ interface TeamMember {
   isPrincipalInvestigator?: boolean
 }
 
-// Mock data - in real app, fetch from API
 const mockCurrentTeam: TeamMember[] = [
-  {
-    id: '1',
-    name: 'Dr. Abebe Kebede',
-    role: 'Principal Investigator',
-    department: 'Dept. of Electrical Engineering',
-    email: 'abebe.kebede@astu.edu.et',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB57aC02WCWaKrVAjh9K8aXJ2Sbt-mUbSP5waYrUIMdT00dHepeFwE8v1FykpXhVs9EAsUJPwZz6MhkGOsCal0YwucvwW5JUUsemFiRxhy0S9DB7AkaBusiHUyp3YJclNj_5bhw544gb0V5BBHMMbg4KdOjFq2NNA3OzZC0knNqA7SeydNbYhpneYiEaR6xNZoGl9ODs5ofUjRypmhat6wJBtwIjmyde2vqeEnso0eLUla5k8p9tig7L6_VZCewQkhhZXaAeO7p9Rg',
-    isPrincipalInvestigator: true,
-  },
-  {
-    id: '2',
-    name: 'Sara Tadesse',
-    role: 'Co-PI',
-    department: 'Dept. of Computer Science',
-    email: 'sara.tadesse@astu.edu.et',
-  },
-  {
-    id: '3',
-    name: 'Tigist Haile',
-    role: 'Research Assistant',
-    department: 'School of Applied Sciences',
-    email: 'tigist.h@astu.edu.et',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtqyiAJ8rXxEJL6JNDHzN7hz19pSPUJd7KVTa4g9wIDP21Sx5RW4UviOYIBTmfhRwjvVpvi7-QyaR3LZ5NB3ag5fTpDnvQdjjm7BV4cLfmzmI82oOG3N5LI66xbNoCsZ81zNv2h6Lg-6qGNKNc1cNbxqaz5ebzl5zYYIZi_d6n4AubRaFbCkxkFVoalk9-q1f-Xh5Ch3H1uiurDyUrkCOxHD_rGyb0HT-dspDdjpv4Slx5HqGcSasPfwhJk-58TtWxm1SgvJyA7RA',
-  },
+  { id: '1', name: 'Dr. Abebe Kebede', role: 'Principal Investigator', department: 'Dept. of Electrical Engineering', email: 'abebe.kebede@astu.edu.et', isPrincipalInvestigator: true },
+  { id: '2', name: 'Sara Tadesse', role: 'Co-PI', department: 'Dept. of Computer Science', email: 'sara.tadesse@astu.edu.et' },
+  { id: '3', name: 'Tigist Haile', role: 'Research Assistant', department: 'School of Applied Sciences', email: 'tigist.h@astu.edu.et' },
 ]
 
-const availableRoles = [
-  'Co-Investigator',
-  'Co-PI',
-  'Research Assistant',
-  'Advisor',
-]
+const availableRoles = ['Co-Investigator', 'Co-PI', 'Research Assistant', 'Advisor']
 
 export default function TeamSelectionClient() {
+  const router = useRouter()
+
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>(mockCurrentTeam)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRole, setSelectedRole] = useState(availableRoles[0])
 
-  const handleRemoveMember = (memberId: string) => {
-    setTeamMembers(prev => prev.filter(member => member.id !== memberId))
-  }
-
-  const handleAddMember = () => {
-    // In real app, this would search and add actual users
-    console.log('Add member:', { searchQuery, selectedRole })
-    // Reset search after adding
+  const handleRemoveMember = (memberId: string) => setTeamMembers(prev => prev.filter(m => m.id !== memberId))
+  const handleAddMember = () => { 
+    console.log({ searchQuery, selectedRole })
     setSearchQuery('')
   }
 
+  const goToBudgetPage = () => {
+    router.push('/budget')
+  }
+
   const getRoleBadgeStyles = (role: string) => {
-    if (role === 'Principal Investigator') {
-      return 'bg-primary/10 text-primary border border-primary/20'
-    }
-    if (role === 'Co-PI') {
-      return 'bg-secondary-green/10 text-secondary-green border border-secondary-green/20'
-    }
+    if (role === 'Principal Investigator') return 'bg-primary/10 text-primary border border-primary/20'
+    if (role === 'Co-PI') return 'bg-secondary-green/10 text-secondary-green border border-secondary-green/20'
     return 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600'
   }
 
   return (
-    <main className="flex-grow flex justify-center py-8 px-4 sm:px-8 bg-background-light dark:bg-background-dark">
-      <div className="w-full max-w-[1024px] flex flex-col gap-8">
+    <main className="flex-grow flex justify-center py-6 px-4 sm:px-6 bg-background-light dark:bg-background-dark">
+      <div className="w-full max-w-5xl flex flex-col gap-5">
         {/* Breadcrumbs */}
-        <nav className="flex flex-wrap items-center gap-2 text-sm" aria-label="Breadcrumb">
-          <Link 
-            href="/" 
-            className="text-text-sub hover:text-primary transition-colors"
-          >
-            Home
-          </Link>
-          <span className="text-text-sub" aria-hidden="true">/</span>
-          <Link 
-            href="/proposals" 
-            className="text-text-sub hover:text-primary transition-colors"
-          >
-            My Proposals
-          </Link>
-          <span className="text-text-sub" aria-hidden="true">/</span>
-          <span className="text-text-main font-medium dark:text-white">
-            New Proposal
-          </span>
+        <nav className="flex flex-wrap items-center gap-1.5 text-xs" aria-label="Breadcrumb">
+          <Link href="/" className="text-text-sub hover:text-primary transition-colors">Home</Link>
+          <span className="text-text-sub">/</span>
+          <Link href="/proposals" className="text-text-sub hover:text-primary transition-colors">My Proposals</Link>
+          <span className="text-text-sub">/</span>
+          <span className="text-text-main font-medium dark:text-white">New Proposal</span>
         </nav>
 
         {/* Progress Bar */}
-        <div className="flex flex-col gap-3">
-          <div className="flex items-end justify-between">
-            <div>
-              <h1 className="text-2xl font-bold dark:text-white">Team Selection</h1>
-              <p className="text-text-sub text-sm mt-1">
-                Proposal Submission Wizard: Step 2 of 5
-              </p>
-            </div>
-            <span className="text-primary font-bold">40%</span>
-          </div>
-          <div className="h-2 w-full bg-border-color rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-primary rounded-full transition-all duration-500 ease-out" 
-              style={{ width: '40%' }}
-              role="progressbar"
-              aria-valuenow={40}
-              aria-valuemin={0}
-              aria-valuemax={100}
-            />
+        <div className="w-full bg-white dark:bg-[#1a2632] rounded-lg shadow-sm border border-[#cfdbe7] dark:border-gray-700 overflow-hidden">
+          <div className="flex w-full overflow-x-auto">
+            {[
+              { number: 1, label: 'Draft', active: false },
+              { number: 2, label: 'Team', active: true },
+              { number: 3, label: 'Budget', active: false },
+              { number: 4, label: 'Review', active: false },
+            ].map((step) => (
+              <div
+                key={step.number}
+                onClick={() => step.label === 'Budget' && goToBudgetPage()}
+                className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] cursor-pointer ${
+                  step.active
+                    ? 'border-b-3 border-primary bg-primary/5'
+                    : 'border-b-3 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
+                }`}
+              >
+                <span
+                  className={`flex items-center justify-center size-5 rounded-full text-xs font-bold ${
+                    step.active
+                      ? 'bg-primary text-white'
+                      : 'bg-[#cfdbe7] text-[#4c739a]'
+                  }`}
+                >
+                  {step.number}
+                </span>
+                <p
+                  className={`text-xs font-semibold tracking-[0.015em] ${
+                    step.active ? 'text-primary' : 'text-[#4c739a]'
+                  }`}
+                >
+                  {step.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Main Content Card */}
-        <div className="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-border-color dark:border-gray-800 overflow-hidden">
+        <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-color dark:border-gray-800 overflow-hidden">
           {/* Page Heading */}
-          <div className="p-6 md:p-8 border-b border-border-color dark:border-gray-800">
-            <div className="flex flex-col gap-2">
-              <h2 className="text-3xl font-black tracking-tight text-text-main dark:text-white">
-                Build Your Research Team
-              </h2>
-              <p className="text-text-sub text-base max-w-2xl">
+          <div className="p-5 border-b border-border-color dark:border-gray-800">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-lg font-bold text-text-main dark:text-white">Build Your Research Team</h2>
+              <p className="text-text-sub text-xs max-w-2xl leading-relaxed">
                 Search for registered ASTU faculty members or students to add them to your proposal. 
                 Ensure you have at least one Co-PI if required by the grant guidelines.
               </p>
@@ -154,58 +123,49 @@ export default function TeamSelectionClient() {
 
           <div className="flex flex-col lg:flex-row">
             {/* Search & Add Section */}
-            <div className="flex-1 p-6 md:p-8 flex flex-col gap-8 border-b lg:border-b-0 lg:border-r border-border-color dark:border-gray-800">
-              {/* Search Form */}
-              <div className="flex flex-col gap-4">
-                <h3 className="text-lg font-bold text-text-main dark:text-white flex items-center gap-2">
-                  <Users className="text-primary" size={24} />
+            <div className="flex-1 p-5 flex flex-col gap-5 border-b lg:border-b-0 lg:border-r border-border-color dark:border-gray-800">
+              <div className="flex flex-col gap-3">
+                <h3 className="text-sm font-bold text-text-main dark:text-white flex items-center gap-1.5">
+                  <Users className="text-primary" size={18} />
                   Add New Member
                 </h3>
 
-                <div className="grid gap-4">
-                  <div className="flex flex-col gap-1.5">
-                    <label 
-                      htmlFor="search-user" 
-                      className="text-sm font-medium text-text-main dark:text-gray-300"
-                    >
+                <div className="grid gap-3">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs font-medium text-text-main dark:text-gray-300">
                       Search User
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Search className="text-text-sub" size={20} />
+                      <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+                        <Search className="text-text-sub" size={16} />
                       </div>
                       <input
-                        id="search-user"
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-background-light dark:bg-gray-800 border border-border-color dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-text-main dark:text-white placeholder-text-sub/70"
+                        className="w-full pl-8 pr-3 py-2 text-sm bg-background-light dark:bg-gray-800 border border-border-color dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-primary/50"
                         placeholder="Name, email, or ASTU ID..."
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label 
-                        htmlFor="assign-role" 
-                        className="text-sm font-medium text-text-main dark:text-gray-300"
-                      >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-medium text-text-main dark:text-gray-300">
                         Assign Role
                       </label>
                       <div className="relative">
                         <select
-                          id="assign-role"
                           value={selectedRole}
                           onChange={(e) => setSelectedRole(e.target.value)}
-                          className="w-full pl-3 pr-10 py-2.5 appearance-none bg-background-light dark:bg-gray-800 border border-border-color dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-text-main dark:text-white"
+                          className="w-full pl-2.5 pr-7 py-2 text-sm appearance-none bg-background-light dark:bg-gray-800 border border-border-color dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-primary/50"
                         >
                           {availableRoles.map((role) => (
                             <option key={role}>{role}</option>
                           ))}
                         </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-text-sub">
-                          <ChevronDown size={20} />
+                        <div className="absolute inset-y-0 right-0 flex items-center px-1.5 pointer-events-none text-text-sub">
+                          <ChevronDown size={16} />
                         </div>
                       </div>
                     </div>
@@ -213,26 +173,23 @@ export default function TeamSelectionClient() {
                     <div className="flex items-end">
                       <button
                         onClick={handleAddMember}
-                        className="w-full h-[42px] bg-primary bg-[#137FEC] text-white font-medium rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2"
+                        className="w-full h-9 bg-[#137FEC] text-white text-sm font-medium rounded-md shadow-sm hover:shadow flex items-center justify-center gap-1.5"
                       >
-                        <Plus size={20} />
-                        Add to Team
+                        <Plus size={16} />
+                        Add
                       </button>
                     </div>
                   </div>
                 </div>
 
                 {/* Info Box */}
-                <div className="mt-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 flex gap-3">
-                  <Info className="text-primary shrink-0 mt-0.5" size={20} />
-                  <div className="text-sm text-text-main dark:text-blue-100">
-                    <p className="font-medium">Can't find a user?</p>
-                    <p className="text-text-sub dark:text-blue-200 mt-1">
-                      If the researcher is not registered in the ASTU system, you can{' '}
-                      <Link 
-                        href="#" 
-                        className="text-primary hover:underline font-medium"
-                      >
+                <div className="mt-1 bg-blue-50 dark:bg-blue-900/20 rounded-md p-3 flex gap-2">
+                  <Info className="text-primary shrink-0 mt-0.5" size={16} />
+                  <div className="text-xs">
+                    <p className="font-medium text-text-main dark:text-blue-100">Can't find a user?</p>
+                    <p className="text-text-sub dark:text-blue-200 mt-0.5">
+                      If the researcher is not registered, you can{' '}
+                      <Link href="#" className="text-primary hover:underline font-medium">
                         invite an external member
                       </Link>{' '}
                       via email.
@@ -243,21 +200,21 @@ export default function TeamSelectionClient() {
             </div>
 
             {/* Team List Section */}
-            <div className="flex-1 p-6 md:p-8 bg-slate-50/50 dark:bg-gray-900/30 flex flex-col gap-6">
+            <div className="flex-1 p-5 bg-slate-50/50 dark:bg-gray-900/30 flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-text-main dark:text-white">
+                <h3 className="text-sm font-bold text-text-main dark:text-white">
                   Current Team{' '}
-                  <span className="text-text-sub font-normal ml-1">
+                  <span className="text-text-sub font-normal ml-1 text-xs">
                     ({teamMembers.length})
                   </span>
                 </h3>
               </div>
 
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 {teamMembers.map((member) => (
                   <div
                     key={member.id}
-                    className={`flex items-start gap-4 p-4 rounded-lg bg-white dark:bg-card-dark border shadow-sm group ${
+                    className={`flex items-start gap-3 p-3 rounded-md bg-white dark:bg-card-dark border ${
                       member.isPrincipalInvestigator
                         ? 'border-primary/30 relative overflow-hidden'
                         : 'border-border-color dark:border-gray-700'
@@ -268,47 +225,46 @@ export default function TeamSelectionClient() {
                     )}
                     
                     {/* Avatar */}
-                    <div className="relative size-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-400 border border-gray-100">
-                    // Replace the Image component with a regular img tag
-{member.imageUrl ? (
-  <img
-    src={member.imageUrl}
-    alt={member.name}
-    className="w-full h-full object-cover"
-  />
-) : (
-  <User size={28} />
-)}
+                    <div className="relative size-10 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-400 border border-gray-200 dark:border-gray-600">
+                      {member.imageUrl ? (
+                        <img
+                          src={member.imageUrl}
+                          alt={member.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <User size={18} />
+                      )}
                     </div>
 
                     {/* Member Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h4 className="font-bold text-text-main dark:text-white truncate">
+                      <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+                        <h4 className="font-medium text-text-main dark:text-white text-sm truncate">
                           {member.name}
                         </h4>
                         <span 
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getRoleBadgeStyles(member.role)}`}
+                          className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${getRoleBadgeStyles(member.role)}`}
                         >
-                          {member.role}
+                          {member.role === 'Principal Investigator' ? 'PI' : member.role}
                         </span>
                       </div>
-                      <p className="text-sm text-text-sub truncate">{member.department}</p>
-                      <p className="text-xs text-text-sub/70 mt-1">{member.email}</p>
+                      <p className="text-xs text-text-sub truncate">{member.department}</p>
+                      <p className="text-[10px] text-text-sub/70 truncate mt-0.5">{member.email}</p>
                     </div>
 
                     {/* Actions */}
                     {member.isPrincipalInvestigator ? (
                       <div className="text-text-sub" title="Cannot remove PI">
-                        <Lock size={20} className="opacity-40 cursor-not-allowed" />
+                        <Lock size={16} className="opacity-40 cursor-not-allowed" />
                       </div>
                     ) : (
                       <button
                         onClick={() => handleRemoveMember(member.id)}
-                        className="text-text-sub hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-full transition-colors"
+                        className="text-text-sub hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-1.5 rounded transition-colors"
                         title="Remove Member"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={16} />
                       </button>
                     )}
                   </div>
@@ -318,22 +274,22 @@ export default function TeamSelectionClient() {
           </div>
 
           {/* Footer Actions */}
-          <div className="p-6 md:px-8 md:py-6 bg-background-light dark:bg-card-dark border-t border-border-color dark:border-gray-800 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+          <div className="p-4 bg-background-light dark:bg-card-dark border-t border-border-color dark:border-gray-800 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
             <Link
               href="/proposals/new/general-info"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-lg border border-border-color dark:border-gray-600 text-text-main dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-2 rounded-md border border-border-color dark:border-gray-600 text-text-main dark:text-white text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-1.5"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={16} />
               Back to General Info
             </Link>
 
-            <Link
-              href="/proposals/new/budget"
-              className="w-full sm:w-auto px-8 py-2.5 rounded-lg bg-[#137FEC] text-white font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+            <button
+              onClick={goToBudgetPage}
+              className="w-full sm:w-auto px-6 py-2 rounded-md bg-[#137FEC] text-white text-sm font-medium shadow-sm hover:shadow flex items-center justify-center gap-1.5"
             >
               Next: Project Budget
-              <ChevronRight size={18} />
-            </Link>
+              <ChevronRight size={16} />
+            </button>
           </div>
         </div>
       </div>

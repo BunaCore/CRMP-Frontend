@@ -5,8 +5,7 @@ export default function Submission() {
 
     return(
         <>
-        {/*<BudgetForm/>
-        <NavBudget/>*/}
+      
         <NavBudget/>
         <NewBudget/>
         </>

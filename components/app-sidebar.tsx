@@ -3,23 +3,16 @@
 import * as React from "react"
 import {
   IconCamera,
-  IconChartBar,
   IconDashboard,
-  IconDatabase,
   IconFileAi,
   IconFileDescription,
-  IconFileWord,
   IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
+  IconPlus,
   IconReport,
-  IconSearch,
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
@@ -32,7 +25,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
- import Image from "next/image" 
+
+import Image from "next/image"
+
 const data = {
   user: {
     name: "Natnael Tilahun",
@@ -45,10 +40,13 @@ const data = {
       url: "#",
       icon: IconDashboard,
     },
-
-   
     {
-      title: " My Projects",
+      title: "New Proposal",
+      url: "/draft",
+      icon: IconPlus,
+    },
+    {
+      title: "My Projects",
       url: "#",
       icon: IconFolder,
     },
@@ -67,55 +65,6 @@ const data = {
       url: "#",
       icon: IconReport,
     },
-    
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
   ],
   navSecondary: [
     {
@@ -123,45 +72,52 @@ const data = {
       url: "#",
       icon: IconSettings,
     },
-    
-    
   ],
-  
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  const [active, setActive] = React.useState("Dashboard")
+
+  const navItems = data.navMain.map((item) => ({
+    ...item,
+    isActive: active === item.title,
+    onClick: () => setActive(item.title),
+  }))
+
   return (
     <Sidebar collapsible="icon" {...props}>
+      {/* HEADER */}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:p-1.5!"
-            >
-              <a href="#">
+            <SidebarMenuButton asChild className="p-1.5">
+              <a href="#" className="flex items-center gap-2">
                 <Image
-  src="/logo.jpg"
-  alt="ASTU CRMP Logo"
-  width={32}
-  height={32}
-  className="w-8 h-8"
-/>
-                <span className="">ASTU CRMP 
-                  <p className="text-xs text-muted-foreground"> Resarch Portal</p>
-
+                  src="/logo.jpg"
+                  alt="ASTU CRMP Logo"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded"
+                />
+                <span className="leading-tight">
+                  ASTU CRMP
+                  <p className="text-xs text-muted-foreground">
+                    Research Portal
+                  </p>
                 </span>
-                
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      {/* CONTENT */}
       <SidebarContent>
-        <NavMain items={data.navMain} />
-       
+        <NavMain items={navItems} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+
+      {/* FOOTER */}
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>

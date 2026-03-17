@@ -67,9 +67,42 @@ export default function NewBudget() {
 
   return (
     <div className="flex flex-col gap-6 px-6 pt-30 pb-10">
-      <div className="px-20 mb-8">
-        <Stepper activeStep="Budget" />
-      </div>
+        <div className="w-full bg-white dark:bg-[#1a2632] rounded-lg shadow-sm border border-[#cfdbe7] dark:border-gray-700 overflow-hidden">
+              <div className="flex w-full overflow-x-auto">
+                {[
+                  { number: 1, label: 'Draft', active: true },
+                  { number: 2, label: 'Team', active: false },
+                  { number: 3, label: 'Budget', active: false },
+                  { number: 4, label: 'Review', active: false },
+                ].map((step) => (
+                  <div
+                    key={step.number}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] ${
+                      step.active
+                        ? 'border-b-3 border-primary bg-primary/5'
+                        : 'border-b-3 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    <span
+                      className={`flex items-center justify-center size-5 rounded-full text-xs font-bold ${
+                        step.active
+                          ? 'bg-primary text-white'
+                          : 'bg-[#cfdbe7] text-[#4c739a]'
+                      }`}
+                    >
+                      {step.number}
+                    </span>
+                    <p
+                      className={`text-xs font-semibold tracking-[0.015em] ${
+                        step.active ? 'text-primary' : 'text-[#4c739a]'
+                      }`}
+                    >
+                      {step.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
       {/* Financial Planning + Budget Card */}
       <div className="px-20 flex justify-between items-center">
