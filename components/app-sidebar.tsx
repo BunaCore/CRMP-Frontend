@@ -54,13 +54,13 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
     isActive: active === item.title,
     onClick: () => {
       setActive(item.title)
-      setOpen(false) // close mobile sidebar on click
+      setOpen(false) 
     },
   }))
 
   return (
     <>
-      {/* MOBILE TOP BAR */}
+     
       <div className="lg:hidden flex items-center justify-between p-4 border-b bg-white">
         <button onClick={() => setOpen(true)}>
           <IconMenu2 size={22} />
@@ -69,7 +69,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         <span className="font-semibold text-sm">ASTU CRMP</span>
       </div>
 
-      {/* FIXED SIDEBAR */}
+    
       <Sidebar
         collapsible="icon"
         className={`
@@ -81,7 +81,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         `}
         {...props}
       >
-        {/* HEADER */}
+     
         <SidebarHeader className="py-4">
           <SidebarMenu>
             <SidebarMenuItem>
@@ -106,19 +106,18 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenu>
         </SidebarHeader>
 
-        {/* CONTENT */}
         <SidebarContent className="flex flex-col gap-6 py-4">
           <NavMain items={navItems} />
           <NavSecondary items={data.navSecondary} className="mt-auto" />
         </SidebarContent>
 
-        {/* FOOTER */}
+   
         <SidebarFooter className="pt-4 border-t">
           <NavUser user={data.user} />
         </SidebarFooter>
       </Sidebar>
 
-      {/* OVERLAY (mobile only) */}
+   
       {open && (
         <div
           className="fixed inset-0 bg-black/30 z-40 lg:hidden"
