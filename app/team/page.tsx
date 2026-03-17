@@ -80,7 +80,12 @@ export default function TeamSelectionClient() {
             ].map((step) => (
               <div
                 key={step.number}
-                onClick={() => step.label === 'Budget' && goToBudgetPage()}
+               onClick={() => {
+  if (step.label === 'Draft') router.push('/draft')
+  if (step.label === 'Team') router.push('/team')
+  if (step.label === 'Budget') router.push('/budget')
+  if (step.label === 'Review') router.push('/revieww')
+}}
                 className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] cursor-pointer ${
                   step.active
                     ? 'border-b-3 border-primary bg-primary/5'

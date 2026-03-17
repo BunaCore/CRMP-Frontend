@@ -78,42 +78,38 @@ export default function BudgetPage() {
         <div className="w-full bg-white rounded-lg shadow-sm border overflow-hidden mb-8">
           <div className="flex w-full overflow-x-auto">
             {[
-              { number: 1, label: 'Draft', active: false },
-              { number: 2, label: 'Team', active: false },
-              { number: 3, label: 'Budget', active: true },
-              { number: 4, label: 'Review', active: false },
-            ].map((step) => (
-              step.label === 'Review' ? (
-                <Link
-                  href="/revieww"
-                  key={step.number}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] border-b-3 ${
-                    step.active ? 'border-primary bg-primary/5' : 'border-transparent hover:bg-gray-50'
-                  }`}
-                >
-                  <span className={`flex items-center justify-center size-5 rounded-full text-xs font-bold ${
-                    step.active ? 'bg-primary text-white' : 'bg-[#cfdbe7] text-[#4c739a]'
-                  }`}>{step.number}</span>
-                  <p className={`text-xs font-semibold tracking-[0.015em] ${step.active ? 'text-primary' : 'text-[#4c739a]'}`}>
-                    {step.label}
-                  </p>
-                </Link>
-              ) : (
-                <div
-                  key={step.number}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] border-b-3 ${
-                    step.active ? 'border-primary bg-primary/5' : 'border-transparent hover:bg-gray-50'
-                  }`}
-                >
-                  <span className={`flex items-center justify-center size-5 rounded-full text-xs font-bold ${
-                    step.active ? 'bg-primary text-white' : 'bg-[#cfdbe7] text-[#4c739a]'
-                  }`}>{step.number}</span>
-                  <p className={`text-xs font-semibold tracking-[0.015em] ${step.active ? 'text-primary' : 'text-[#4c739a]'}`}>
-                    {step.label}
-                  </p>
-                </div>
-              )
-            ))}
+  { number: 1, label: 'Draft', active: false, href: '/draft' },
+  { number: 2, label: 'Team', active: false, href: '/team' },
+  { number: 3, label: 'Budget', active: true, href: '/budget' },
+  { number: 4, label: 'Review', active: false, href: '/revieww' },
+].map((step) => (
+  <Link
+    href={step.href}
+    key={step.number}
+    className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] border-b-3 ${
+      step.active
+        ? 'border-primary bg-primary/5'
+        : 'border-transparent hover:bg-gray-50'
+    }`}
+  >
+    <span
+      className={`flex items-center justify-center size-5 rounded-full text-xs font-bold ${
+        step.active
+          ? 'bg-primary text-white'
+          : 'bg-[#cfdbe7] text-[#4c739a]'
+      }`}
+    >
+      {step.number}
+    </span>
+    <p
+      className={`text-xs font-semibold tracking-[0.015em] ${
+        step.active ? 'text-primary' : 'text-[#4c739a]'
+      }`}
+    >
+      {step.label}
+    </p>
+  </Link>
+))}
           </div>
         </div>
 

@@ -22,14 +22,11 @@ export default function Page() {
           </div>
 
           <div>
-            <p className="font-semibold text-sm">CRMP | ASTU</p>
+            <p className="font-semibold text-sm">CRMP  ASTU</p>
           </div>
         </div>
 
-        <div className="px-6 py-5">
-          <p className="text-sm font-semibold">ASTU Research</p>
-          <p className="text-xs text-gray-500">Management Platform</p>
-        </div>
+        
 
         <nav className="px-4 text-sm space-y-2">
 
