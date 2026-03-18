@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppProvider } from "@/contexts/AppContext";
+import { SidebarProvider } from "@/components/ui/sidebar"; // ✅ add this
 
 import "./globals.css";
 
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AppProvider>
           <TooltipProvider>
-            {children}
+            <SidebarProvider> {/* ✅ wrap here once */}
+              {children}
+            </SidebarProvider>
           </TooltipProvider>
         </AppProvider>
       </body>

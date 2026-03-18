@@ -33,8 +33,8 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
-    { title: "Dashboard", url: "#", icon: IconDashboard },
-    { title: "New Proposal", url: "#", icon: IconPlus },
+    { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
+    { title: "New Proposal", url: "/draft", icon: IconPlus },
     { title: "My Projects", url: "#", icon: IconFolder },
     { title: "Grants", url: "#", icon: IconDashboard },
     { title: "Team", url: "#", icon: IconUsers },
