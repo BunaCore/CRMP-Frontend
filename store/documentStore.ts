@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist,createJSONStorage } from "zustand/middleware";
 
 export interface Document {
   fileName: string;
@@ -31,9 +31,10 @@ const useDocumentStore = create<DocumentState>()(
         set((state) => ({
           documents: state.documents.filter((_, i) => i !== index),
         })),
+      resetDocuments: () => set({ documents: [] }),
     }),
     {
-      name: "document-storage", // key in localStorage
+      name: "document-storage", 
     }
   )
 );

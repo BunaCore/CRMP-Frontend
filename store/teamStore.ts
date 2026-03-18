@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage} from "zustand/middleware";
 
 interface TeamMember {
   name: string;
@@ -28,9 +28,12 @@ const useTeamStore = create<TeamStore>()(
         })),
 
       resetTeam: () => set({ team: [] }),
+      removeMember: (index: number) =>
+      set((state) => ({ team: state.team.filter((_, i) => i !== index) }))
     }),
     {
-      name: "team-storage", // key in localStorage
+      name: "team-storage", 
+      
     }
   )
 );

@@ -103,7 +103,7 @@ export default function NewReview() {
       {/* Sidebar */}
       <div className="hidden lg:flex bg-white w-64 shrink-0 shadow-lg p-6 flex-col gap-4">
         <h2 className="text-2xl font-bold">
-          ASTU Research{" "}
+            ASTU Research{" "}
           <span className="text-gray-400 text-base">
             Management Platform
           </span>
@@ -131,7 +131,6 @@ export default function NewReview() {
           </div>
         </nav>
 
-        {/* Help box */}
         <div className="mt-auto bg-white border border-gray-200 rounded-lg p-4">
           <p className="font-semibold text-gray-700 text-sm">Need help?</p>
           <p className="text-[#13DAEC] text-sm font-bold py-1 cursor-pointer">
@@ -143,7 +142,7 @@ export default function NewReview() {
       {/* Main Content */}
       <div className="flex-1 w-full px-4 sm:px-6 md:px-10 lg:px-16 pt-10 sm:pt-12 flex flex-col gap-6">
 
-        {/* Heading */}
+       
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
             Review Your Proposal

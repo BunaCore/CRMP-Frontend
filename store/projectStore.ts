@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist,createJSONStorage } from "zustand/middleware"
 
 interface Project {
   title: string
@@ -43,7 +43,7 @@ const useProjectStore = create<ProjectStore>()(
         }),
     }),
     {
-      name: "project-storage", // key in localStorage
+      name: "project-storage", 
     }
   )
 )

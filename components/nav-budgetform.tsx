@@ -6,7 +6,7 @@ import { BookOpenIcon } from "@heroicons/react/24/solid";
 import { Bell } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function NavBudget() {
+export default function NavBudgetForm() {
   return (
     <nav className="fixed flex items-center justify-between py-3 px-8 top-0 w-full h-16 bg-white shadow-md">
       <ul className="flex gap-5 text-sm text-gray-700 cursor-pointer">
