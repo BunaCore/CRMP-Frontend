@@ -20,7 +20,6 @@ export default function ReviewPage() {
             Please review all details below to ensure accuracy. You can edit specific sections if needed before final submission.
           </p>
 
-          {/* Stepper */}
           <div className="w-full bg-white dark:bg-[#1a2632] rounded-lg shadow-sm border overflow-hidden mb-6">
             <div className="flex w-full overflow-x-auto">
               {[
