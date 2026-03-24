@@ -113,7 +113,7 @@ export default function BudgetForm() {
             Manage project funds, track utilization, and submit new budget
             requests for{" "}
             <span className="text-sky-400">
-              "AI for Agriculture in Rift Valley"
+              AI for Agriculture in Rift Valley
             </span>
           </p>
         </div>
