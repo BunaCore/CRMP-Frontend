@@ -2,14 +2,13 @@
 
 
 
-import Newbudgetdetail from "@/components/new-budgetdetail"
+import  BudgetDetail from "@/components/budget-detail"
 
 export default function Submission() {
 
     return(
         <>
-        
-        <Newbudgetdetail/>
+        < BudgetDetail/>
         
         </>
     )

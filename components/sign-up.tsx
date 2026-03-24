@@ -104,6 +104,7 @@ export default function SignUpForm() {
   };
 
   return (
+
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
       <Card className="md:w-[740px] w-full overflow-hidden grid md:grid-cols-2 py-0">
 
@@ -127,26 +128,27 @@ export default function SignUpForm() {
 
           {/* Bottom text */}
           <div className="absolute bottom-0 left-0 p-6 text-white">
-            <h1 className="text-xl font-semibold">
+            <h1 className="text-lg font-semibold">
               Advancing Science and Technology Through Collaboration
             </h1>
 
-            <p className="text-sm text-gray-100 mt-2">
+            <p className="text-sm text-gray-400 mt-2">
               Join the Adama Science and Technology University research community.
               Collaborate, innovate, and manage your projects efficiently.
             </p>
           </div>
       </div>
+
         {/* Form */}
         <div className="flex flex-col p-6 lg:p-8 pr-8 lg:pr-12">
-          <CardHeader className="p-0 pb-4">
-            <CardTitle className="text-2xl">Join the Research Community</CardTitle>
-          </CardHeader>
-
+          
           <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
-            <CardContent className="space-y-4 p-0">
+              <CardContent className="space-y-4 p-0">
+               <CardHeader className="p-0">
+                <CardTitle className="text-xl font-bold">Join the Research Community</CardTitle>
+              </CardHeader>
 
-              {/* Full name */}
+             
               <div className="space-y-2">
                 <Label>Full Name</Label>
                 <Input
@@ -157,7 +159,7 @@ export default function SignUpForm() {
                 />
               </div>
 
-              {/* Department + ID */}
+              
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Department</Label>
@@ -180,7 +182,7 @@ export default function SignUpForm() {
                 </div>
               </div>
 
-              {/* Email */}
+            
               <div className="space-y-2">
                 <Label>Email</Label>
                 <Input
@@ -192,7 +194,7 @@ export default function SignUpForm() {
                 />
               </div>
 
-              {/* Passwords */}
+              
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Password</Label>
@@ -217,7 +219,6 @@ export default function SignUpForm() {
                 </div>
               </div>
 
-              {/* Role */}
               <div className="space-y-2">
                 <Label>Role</Label>
                 <select

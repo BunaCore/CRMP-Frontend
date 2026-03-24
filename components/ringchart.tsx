@@ -18,11 +18,11 @@ const percentUsed = Math.round((total / budget) * 100);
 export default function BudgetChart() {
   return (
     <Card className="w-full border border-gray-200">
-      <CardHeader className="px-4">
+      <CardHeader className="px-0">
         <CardTitle>Budget Usage</CardTitle>
       </CardHeader>
 
-      <CardContent className="px-4 flex justify-center items-center relative">
+      <CardContent className="px-0 flex justify-center items-center relative">
         <PieChart width={200} height={200}>
           <Pie
             data={data}
