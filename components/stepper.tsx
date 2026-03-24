@@ -1,6 +1,10 @@
 "use client";
 
-export default function Stepper({ activeStep }) {
+interface StepperProps {
+  activeStep: string;
+}
+
+export default function Stepper({ activeStep }: StepperProps) {
   const steps = ["Draft", "Team", "Budget", "Review"];
 
   return (
