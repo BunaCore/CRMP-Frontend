@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import Link from 'next/link';
-import { Pencil } from 'lucide-react';
-import { AppSidebar } from '@/components/app-sidebar';
+import Link from "next/link";
+import { Pencil } from "lucide-react";
+import { AppSidebar } from "@/components/app-sidebar";
 
 export default function ReviewPage() {
   return (
@@ -13,40 +13,42 @@ export default function ReviewPage() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-5">
-
           {/* Page Title */}
           <h1 className="text-2xl font-semibold">Review Your Proposal</h1>
           <p className="text-sm text-gray-500 mt-1 mb-6">
-            Please review all details below to ensure accuracy. You can edit specific sections if needed before final submission.
+            Please review all details below to ensure accuracy. You can edit
+            specific sections if needed before final submission.
           </p>
 
           <div className="w-full bg-white dark:bg-[#1a2632] rounded-lg shadow-sm border overflow-hidden mb-6">
             <div className="flex w-full overflow-x-auto">
               {[
-                { number: 1, label: 'Draft', href: '/draft', active: false },
-                { number: 2, label: 'Team', href: '/team', active: false },
-                { number: 3, label: 'Budget', href: '/budget', active: false },
-                { number: 4, label: 'Review', href: '/review', active: true },
+                { number: 1, label: "Draft", href: "/draft", active: false },
+                { number: 2, label: "Team", href: "/team", active: false },
+                { number: 3, label: "Budget", href: "/budget", active: false },
+                { number: 4, label: "Review", href: "/review", active: true },
               ].map((step) => (
                 <Link
                   key={step.number}
                   href={step.href}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-3 min-w-[100px] cursor-pointer transition-all ${
                     step.active
-                      ? 'border-b-3 border-primary bg-primary/5'
-                      : 'border-b-3 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
+                      ? "border-b-3 border-primary bg-primary/5"
+                      : "border-b-3 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800"
                   }`}
                 >
                   <span
                     className={`flex items-center justify-center size-5 rounded-full text-xs font-bold ${
-                      step.active ? 'bg-primary text-white' : 'bg-[#cfdbe7] text-[#4c739a]'
+                      step.active
+                        ? "bg-primary text-white"
+                        : "bg-[#cfdbe7] text-[#4c739a]"
                     }`}
                   >
                     {step.number}
                   </span>
                   <p
                     className={`text-xs font-semibold tracking-[0.015em] ${
-                      step.active ? 'text-primary' : 'text-[#4c739a]'
+                      step.active ? "text-primary" : "text-[#4c739a]"
                     }`}
                   >
                     {step.label}
@@ -61,11 +63,10 @@ export default function ReviewPage() {
 
           {/* Research Team */}
           <ResearchTeamCard />
-
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 // Component: Project Details Card
@@ -90,9 +91,9 @@ function ProjectDetailsCard() {
         <div className="col-span-2">
           <Label>ABSTRACT</Label>
           <p className="text-gray-600 leading-relaxed">
-            This research aims to develop a robust artificial intelligence
-            model capable of identifying early-stage crop diseases using
-            drone imagery...
+            This research aims to develop a robust artificial intelligence model
+            capable of identifying early-stage crop diseases using drone
+            imagery...
           </p>
         </div>
         <div>
@@ -105,7 +106,7 @@ function ProjectDetailsCard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Component: Research Team Card
@@ -128,29 +129,65 @@ function ResearchTeamCard() {
           </tr>
         </thead>
         <tbody>
-          <TeamRow initials="DA" name="Dr. Dawit Abebe" role="Principal Investigator" dept="Computing" email="dawit.a@astu.edu.et" />
-          <TeamRow initials="ST" name="Sarah Tadesse" role="Co-Investigator" dept="Agriculture" email="sarah.t@astu.edu.et" />
-          <TeamRow initials="MK" name="Dr. Michael Kebede" role="Co-Investigator" dept="Economics" email="m.kebede@astu.edu.et" />
+          <TeamRow
+            initials="DA"
+            name="Dr. Dawit Abebe"
+            role="Principal Investigator"
+            dept="Computing"
+            email="dawit.a@astu.edu.et"
+          />
+          <TeamRow
+            initials="ST"
+            name="Sarah Tadesse"
+            role="Co-Investigator"
+            dept="Agriculture"
+            email="sarah.t@astu.edu.et"
+          />
+          <TeamRow
+            initials="MK"
+            name="Dr. Michael Kebede"
+            role="Co-Investigator"
+            dept="Economics"
+            email="m.kebede@astu.edu.et"
+          />
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
-function TeamRow({ initials, name, role, dept, email }: any) {
+interface TeamRowProps {
+  initials: string;
+  name: string;
+  role: string;
+  dept: string;
+  email: string;
+}
+
+function TeamRow({ initials, name, role, dept, email }: TeamRowProps) {
   return (
     <tr className="border-b">
       <td className="py-4 px-6 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium">{initials}</div>
+        <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium">
+          {initials}
+        </div>
         {name}
       </td>
-      <td><span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md">{role}</span></td>
+      <td>
+        <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md">
+          {role}
+        </span>
+      </td>
       <td>{dept}</td>
       <td className="text-teal-600">{email}</td>
     </tr>
-  )
+  );
 }
 
-function Label({ children }: any) {
-  return <p className="text-xs font-semibold tracking-wide text-teal-600 mb-1">{children}</p>
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-xs font-semibold tracking-wide text-teal-600 mb-1">
+      {children}
+    </p>
+  );
 }

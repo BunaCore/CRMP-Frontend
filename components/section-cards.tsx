@@ -1,31 +1,32 @@
-"use client"
+"use client";
 
 import {
   IconArrowUp,
   IconTrendingDown,
   IconTrendingUp,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 export function SectionCards() {
   return (
-    <div className="
+    <div
+      className="
       px-4 lg:px-6
       grid gap-4
       sm:grid-cols-2
       lg:grid-cols-4
-    ">
-
+    "
+    >
       {/* CARD 1 */}
-      <Card className="flex flex-col justify-between bg-gradient-to-t from-primary/5 to-card shadow-xs">
+      <Card className="flex flex-col justify-between bg-linear-to-t from-primary/5 to-card shadow-xs">
         <CardHeader className="flex flex-row items-center justify-between">
           <IconArrowUp className="size-5 text-muted-foreground" />
 
@@ -120,7 +121,6 @@ export function SectionCards() {
           </div>
         </CardFooter>
       </Card>
-
     </div>
-  )
+  );
 }

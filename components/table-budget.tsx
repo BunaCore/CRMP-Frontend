@@ -26,11 +26,20 @@ export default function Table({ rows, setRows, onTotalChange }: TableProps) {
 
   const handleChange = (index: number, field: keyof Row, value: string | number) => {
     const updatedRows = [...rows];
-    if (field === "unitCost" || field === "qty") {
-      updatedRows[index][field] = Number(value);
+    const currentRow = updatedRows[index];
+
+    if (field === "unitCost") {
+      currentRow.unitCost = Number(value);
+    } else if (field === "qty") {
+      currentRow.qty = Number(value);
+    } else if (field === "description") {
+      currentRow.description = String(value);
+    } else if (field === "category") {
+      currentRow.category = String(value);
     } else {
-      updatedRows[index][field] = value as string;
+      currentRow.total = Number(value);
     }
+
     updatedRows[index].total = updatedRows[index].unitCost * updatedRows[index].qty;
     setRows(updatedRows);
 

@@ -6,10 +6,14 @@ import { ChevronUp, ChevronDown } from "lucide-react";
 import useDocumentStore from "@/store/documentStore";
 import useUserStore from '@/store/userStore'
 
-export default function TableReview({ onEdit }) {
+interface TableReviewProps {
+  onEdit: () => void;
+}
+
+export default function TableReview({ onEdit }: TableReviewProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { documents } = useDocumentStore(); 
-  const {loading,setLoading} = useUserStore()
+  const { loading } = useUserStore()
 
   return (
     <div className="w-full flex flex-col gap-2">
