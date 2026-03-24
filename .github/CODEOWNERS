@@ -1,11 +1,12 @@
 # CODEOWNERS
-# Replace the placeholder owner below with your real GitHub username or team.
-# Example: @your-org/frontend-team
 
-* @OWNER_USERNAME
+# Frontend team ownership
 
-# Optional finer-grained ownership examples:
-# /app/ @OWNER_USERNAME
-# /components/ @OWNER_USERNAME
-# /store/ @OWNER_USERNAME
-# /lib/ @OWNER_USERNAME
+- @BunaCore/our-team
+
+# Finer-grained ownership per domain:
+
+/app/ @BunaCore/our-team
+/components/ @BunaCore/our-team
+/store/ @BunaCore/our-team
+/lib/ @BunaCore/our-team

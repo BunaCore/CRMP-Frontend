@@ -71,6 +71,28 @@ npm run lint
 npm run build
 ```
 
+## Docker
+
+### Build Image
+
+```bash
+docker build -t crmp-frontend .
+```
+
+### Run Container
+
+```bash
+docker run --rm -p 3000:3000 --name crmp-frontend crmp-frontend
+```
+
+### Run with Docker Compose
+
+```bash
+docker compose up --build
+```
+
+The app will be available at `http://localhost:3000`.
+
 ## Project Structure (High-Level)
 
 - `app/` - routes, layouts, route composition
