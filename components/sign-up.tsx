@@ -16,14 +16,7 @@ interface FormData {
 }
 
 export default function SignUpForm() {
-  const {
-    currentUser,
-    loading,
-    error,
-    signInStart,
-    signInSuccess,
-    signInFailure,
-  } = useUserStore();
+  const { error, signInStart, signInSuccess, signInFailure } = useUserStore();
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",
@@ -34,7 +27,7 @@ export default function SignUpForm() {
     role: "",
   });
 
-  const [formerror, setFormError] = useState<string>("");
+  const [formError, setFormError] = useState<string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -251,7 +244,9 @@ export default function SignUpForm() {
               </select>
             </label>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {(formError || error) && (
+              <p className="text-red-500 text-sm">{formError || error}</p>
+            )}
 
             <button
               type="submit"

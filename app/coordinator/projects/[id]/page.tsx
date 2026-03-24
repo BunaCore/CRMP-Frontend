@@ -161,7 +161,7 @@ export default function ProposalDetailPage() {
     setNotes("");
   };
 
-  const handleAdvisorAssign = (advisorId: string, deadline?: string) => {
+  const handleAdvisorAssign = (advisorId: string) => {
     updateProject(project.id, { advisorId });
 
     const assignedAdvisor = getUserById(advisorId);

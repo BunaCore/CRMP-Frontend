@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export function DashboardSidebar() {
   return (
@@ -47,18 +48,24 @@ export function DashboardSidebar() {
         <CardContent className="p-4 space-y-3">
           <span className="font-semibold text-sm">Active Collaborations</span>
           <div className="flex items-center gap-2">
-            <img
+            <Image
               src="/avatars/user1.png"
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full border-2 border-white"
               alt="User"
             />
-            <img
+            <Image
               src="/avatars/user2.png"
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full border-2 border-white"
               alt="User"
             />
-            <img
+            <Image
               src="/avatars/user3.png"
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full border-2 border-white"
               alt="User"
             />

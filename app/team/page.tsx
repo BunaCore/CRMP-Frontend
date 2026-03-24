@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   ChevronLeft,
   ChevronRight,
@@ -246,9 +247,10 @@ export default function TeamSelectionClient() {
                       )}
                       <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-400 border border-gray-200 dark:border-gray-600">
                         {member.imageUrl ? (
-                          <img
+                          <Image
                             src={member.imageUrl}
                             alt={member.name}
+                            fill
                             className="w-full h-full object-cover"
                           />
                         ) : (

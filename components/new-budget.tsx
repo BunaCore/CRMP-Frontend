@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Stepper from "@/components/stepper";
 import Table from "@/components/table-budget";
 import { Plus } from "lucide-react";
 
@@ -43,27 +42,6 @@ export default function NewBudget() {
       console.error(err);
     }
   };
-  const handleSubmit = async () => {
-    try {
-      const res = await fetch("/api/budget", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ rows }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Submission failed");
-      }
-
-      const data = await res.json();
-      console.log("Success:", data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <div className="flex flex-col gap-6 px-6 pt-30 pb-10">
       <div className="w-full bg-white dark:bg-[#1a2632] rounded-lg shadow-sm border border-[#cfdbe7] dark:border-gray-700 overflow-hidden">
