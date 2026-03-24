@@ -69,6 +69,12 @@ For each task:
 - Silent breaking changes to route structure or shared component APIs.
 - Large stylistic rewrites unrelated to task scope.
 
+## 8.1) Component Naming Rule (Mandatory)
+
+- Component file names and exported component names must match exactly in PascalCase.
+- Example: `LandingNavbar.tsx` must export `LandingNavbar`.
+- Do not create new kebab-case component files for React components.
+
 ## 9) Response Style for This Repo
 
 - Be concise and implementation-first.
