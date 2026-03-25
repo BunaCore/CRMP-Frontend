@@ -42,6 +42,7 @@ When implementing features, prioritize this target route model even if legacy fo
 - `components/**` (outside ui): composed feature components
 - `store/**`: Zustand slices/stores
 - `lib/**`: utilities, schemas, adapters, typed contracts
+- `lib/api/**`: API client instances, hooks, and data-fetching logic
 - `contexts/**`: provider wiring only (avoid domain duplication)
 
 ## 6) Collaboration and Conflict Prevention

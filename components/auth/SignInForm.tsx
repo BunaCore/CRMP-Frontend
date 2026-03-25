@@ -3,9 +3,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import {
   Form,
   FormControl,
@@ -16,8 +19,12 @@ import {
 } from '@/components/ui/form';
 
 import { signInSchema, type SignInFormData } from '@/types/auth';
+import { useSignIn } from '@/lib/api/auth/mutations';
 
 export function SignInForm() {
+  const router = useRouter();
+  const { mutate: signIn, isPending, error } = useSignIn();
+
   const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -26,9 +33,23 @@ export function SignInForm() {
     },
   });
 
+  // Display error if mutation fails
+  useEffect(() => {
+    if (error) {
+      form.setError('email', {
+        type: 'manual',
+        message: error instanceof Error ? error.message : 'Sign in failed',
+      });
+    }
+  }, [error, form]);
+
   function onSubmit(data: SignInFormData) {
-    console.log('Form submitted:', data);
-    // TODO: Integrate with API using TanStack Query
+    signIn(data, {
+      onSuccess: () => {
+        // Redirect to dashboard on successful sign in
+        router.push('/dashboard');
+      },
+    });
   }
 
   return (
@@ -67,11 +88,10 @@ export function SignInForm() {
                 </Link>
               </div>
               <FormControl>
-                <Input
-                  type="password"
+                <PasswordInput
+                  value={field.value}
+                  onChange={field.onChange}
                   placeholder="Enter your password"
-                  {...field}
-                  className="rounded-none border-border"
                 />
               </FormControl>
               <FormMessage className="text-xs" />
@@ -82,9 +102,10 @@ export function SignInForm() {
         {/* Submit Button */}
         <Button
           type="submit"
+          disabled={isPending}
           className="w-full rounded-none bg-primary hover:bg-primary/90 text-white font-medium"
         >
-          Sign In
+          {isPending ? 'Signing in...' : 'Sign In'}
         </Button>
 
         {/* Sign Up Link */}

@@ -3,9 +3,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import {
   Select,
   SelectContent,
@@ -24,8 +27,12 @@ import {
 
 import { signUpSchema, type SignUpFormData } from '@/types/auth';
 import { MOCK_UNIVERSITIES, MOCK_DEPARTMENTS } from '@/lib/mockData/auth';
+import { useSignUp } from '@/lib/api/auth/mutations';
 
 export function SignUpForm() {
+  const router = useRouter();
+  const { mutate: signUp, isPending, error } = useSignUp();
+
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -39,9 +46,23 @@ export function SignUpForm() {
     },
   });
 
+  // Display error if mutation fails
+  useEffect(() => {
+    if (error) {
+      form.setError('email', {
+        type: 'manual',
+        message: error instanceof Error ? error.message : 'Sign up failed',
+      });
+    }
+  }, [error, form]);
+
   function onSubmit(data: SignUpFormData) {
-    console.log('Form submitted:', data);
-    // TODO: Integrate with API using TanStack Query
+    signUp(data, {
+      onSuccess: () => {
+        // Redirect to dashboard on successful sign up
+        router.push('/dashboard');
+      },
+    });
   }
 
   return (
@@ -167,11 +188,10 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel className="text-sm font-medium">Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
+                <PasswordInput
+                  value={field.value}
+                  onChange={field.onChange}
                   placeholder="At least 8 characters"
-                  {...field}
-                  className="rounded-none border-border"
                 />
               </FormControl>
               <FormMessage className="text-xs" />
@@ -187,11 +207,10 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel className="text-sm font-medium">Confirm Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
+                <PasswordInput
+                  value={field.value}
+                  onChange={field.onChange}
                   placeholder="Confirm your password"
-                  {...field}
-                  className="rounded-none border-border"
                 />
               </FormControl>
               <FormMessage className="text-xs" />
@@ -202,9 +221,10 @@ export function SignUpForm() {
         {/* Submit Button */}
         <Button
           type="submit"
+          disabled={isPending}
           className="w-full rounded-none bg-primary hover:bg-primary/90 text-white font-medium"
         >
-          Create Account
+          {isPending ? 'Creating Account...' : 'Create Account'}
         </Button>
 
         {/* Sign In Link */}

@@ -2,66 +2,65 @@ import { useMutation } from '@tanstack/react-query';
 import { SignUpFormData, SignInFormData } from '@/types/auth';
 import { apiClient } from '@/lib/api/client';
 import { handleApiError } from '@/lib/api/errors';
-import { signUpResponseSchema, signInResponseSchema } from './types';
+import { LoginResponse, SignUpResponse } from './types';
+import { useAuthStore } from '@/store/authStore';
 
 /**
  * Sign up mutation
  * POST /auth/signup
  */
 export function useSignUp() {
+  const login = useAuthStore((state) => state.login);
+
   return useMutation({
     mutationFn: async (data: SignUpFormData) => {
-      try {
-        const response = await apiClient.post('/auth/signup', data);
-        const validated = signUpResponseSchema.parse(response.data);
-
-        // Store token in localStorage
-        if (validated.token) {
-          localStorage.setItem('authToken', validated.token);
-        }
-
-        return validated;
-      } catch (error) {
-        handleApiError(error);
-      }
+      const response = await apiClient.post<SignUpResponse>('/auth/signup', data);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      login(data.access_token, data.user);
+    },
+    onError: (error) => {
+      handleApiError(error);
     },
   });
 }
 
 /**
  * Sign in mutation
- * POST /auth/signin
+ * POST /auth/login
  */
 export function useSignIn() {
+  const login = useAuthStore((state) => state.login);
+
   return useMutation({
     mutationFn: async (data: SignInFormData) => {
-      try {
-        const response = await apiClient.post('/auth/signin', data);
-        const validated = signInResponseSchema.parse(response.data);
-
-        // Store token in localStorage
-        if (validated.token) {
-          localStorage.setItem('authToken', validated.token);
-        }
-
-        return validated;
-      } catch (error) {
-        handleApiError(error);
-      }
+      const response = await apiClient.post<LoginResponse>('/auth/login', data);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      login(data.access_token, data.user);
+    },
+    onError: (error) => {
+      handleApiError(error);
     },
   });
 }
 
 /**
- * Sign out helper (removes token)
+ * Sign out mutation
  */
 export function useSignOut() {
+  const logout = useAuthStore((state) => state.logout);
+
   return useMutation({
     mutationFn: async () => {
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('authToken');
-      }
+      // Optional: call logout endpoint on backend
+      // await apiClient.post('/auth/logout');
       return null;
+    },
+    onSuccess: () => {
+      logout();
     },
   });
 }

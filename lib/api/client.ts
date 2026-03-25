@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { useAuthStore } from '@/store/authStore';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
@@ -16,13 +17,13 @@ export const apiClient: AxiosInstance = axios.create({
 });
 
 /**
- * Request interceptor: Add auth token from localStorage
+ * Request interceptor: Add auth token from Zustand store
  */
 apiClient.interceptors.request.use(
   (config) => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const { access_token } = useAuthStore.getState();
+    if (access_token) {
+      config.headers.Authorization = `Bearer ${access_token}`;
     }
     return config;
   },

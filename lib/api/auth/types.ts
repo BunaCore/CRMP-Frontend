@@ -1,38 +1,30 @@
-import { z } from 'zod';
+export interface AuthUser {
+  id: string;
+  fullName: string;
+  email: string;
+  department: string | null;
+  phoneNumber: string | null;
+  university: string | null;
+  universityId: string | null;
+  isExternal: boolean;
+  accountStatus: string;
+  createdAt: string;
+  roles: string[];
+  role: string;
+}
 
-/**
- * Auth API Response Schemas
- */
+export interface LoginResponse {
+  access_token: string;
+  user: AuthUser;
+}
 
-export const authResponseSchema = z.object({
-  id: z.string(),
-  email: z.string().email(),
-  fullName: z.string().optional(),
-  token: z.string(),
-  refreshToken: z.string().optional(),
-  expiresIn: z.number().optional(),
-});
+export interface SignUpResponse {
+  access_token: string;
+  user: AuthUser;
+}
 
-export type AuthResponse = z.infer<typeof authResponseSchema>;
-
-export const signUpResponseSchema = authResponseSchema.extend({
-  createdAt: z.string(),
-  role: z.enum(['researcher', 'supervisor', 'admin']).optional(),
-});
-
-export type SignUpResponse = z.infer<typeof signUpResponseSchema>;
-
-export const signInResponseSchema = authResponseSchema;
-
-export type SignInResponse = z.infer<typeof signInResponseSchema>;
-
-/**
- * Error response schemas
- */
-export const apiErrorSchema = z.object({
-  message: z.string(),
-  code: z.string().optional(),
-  errors: z.record(z.string(), z.array(z.string())).optional(),
-});
-
-export type ApiErrorType = z.infer<typeof apiErrorSchema>;
+export interface ApiErrorType {
+  message: string;
+  code?: string;
+  errors?: Record<string, string[]>;
+}
