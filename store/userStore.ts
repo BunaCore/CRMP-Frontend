@@ -1,13 +1,20 @@
 import { create } from "zustand";
 import { persist, createJSONStorage} from "zustand/middleware";
 
+interface AuthUser {
+  id: string;
+  fullname?: string;
+  email: string;
+  role?: string;
+}
+
 interface UserState {
-  currentUser: any | null;
+  currentUser: AuthUser | null;
   error: string | null;
   loading: boolean;
 
   signInStart: () => void;
-  signInSuccess: (user: any) => void;
+  signInSuccess: (user: AuthUser) => void;
   signInFailure: (message: string) => void;
   setLoading: (value: boolean) => void;
   toggleLoading: () => void;
@@ -20,7 +27,12 @@ const useUserStore = create<UserState>()(
       error: null,
       loading: false,
 
-      signInStart: () => set({ loading: true }),
+
+  // User actions
+  signInStart: () => set({ loading: true }),
+  signInSuccess: (user) =>
+    set({ currentUser: user, loading: false, error: null }),
+  signInFailure: (message) => set({ error: message, loading: false }),
 
       signInSuccess: (user) =>
         set({

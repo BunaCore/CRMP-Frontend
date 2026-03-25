@@ -1,0 +1,12 @@
+# CODEOWNERS
+
+# Frontend team ownership
+
+- @BunaCore/our-team
+
+# Finer-grained ownership per domain:
+
+/app/ @BunaCore/our-team
+/components/ @BunaCore/our-team
+/store/ @BunaCore/our-team
+/lib/ @BunaCore/our-team

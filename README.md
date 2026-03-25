@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ASTU Collaborative Research Management Platform (CRMP) - Frontend
+
+Enterprise-grade frontend for ASTU's Collaborative Research Management Platform, built to centralize the full research lifecycle (UGR, PG, Staff) in one AI-enhanced workflow.
+
+## Mission
+
+CRMP streamlines proposal submission, review, approvals, tracking, and administration across different user roles in a single platform.
+
+## Core Capabilities
+
+- Role-aware research workflows for Student, PG, and Admin users
+- Proposal submission and review lifecycle tracking
+- Shared dashboard experience for authenticated users
+- Reusable enterprise UI built with accessible primitives
+- Strict metadata validation for research and form data
+
+## Tech Stack
+
+- Next.js (App Router)
+- Tailwind CSS
+- Shadcn UI + Radix primitives
+- TanStack React Query (server state target)
+- Zustand (local UI state)
+- React Hook Form + Zod (forms + validation)
+- TypeScript (strict mode)
+
+## Routing Strategy (Target)
+
+### Public
+
+- `/`
+- `/login`
+- `/signup`
+- `/research-database`
+
+### Private Shared
+
+- `/dashboard`
+
+### Role Scoped
+
+- `/student/*` - submission, collaborator matching, advisor requests
+- `/pg/*` - budget oversight, certification flow
+- `/admin/*` - user management, system logs, routing rules
+
+> Note: If legacy routes exist, new work should still follow the target model above.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- npm 10+
+
+### Install
+
+```bash
+npm install
+```
+
+### Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Quality Checks
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Docker
 
-## Learn More
+### Build Image
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker build -t crmp-frontend .
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Run Container
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+docker run --rm -p 3000:3000 --name crmp-frontend crmp-frontend
+```
 
-## Deploy on Vercel
+### Run with Docker Compose
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker compose up --build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app will be available at `http://localhost:3000`.
+
+## Project Structure (High-Level)
+
+- `app/` - routes, layouts, route composition
+- `components/ui/` - UI primitives only
+- `components/` - composed feature components
+- `store/` - Zustand stores
+- `lib/` - utilities, schemas, adapters, typed contracts
+- `contexts/` - provider wiring only
+
+## Engineering Rules
+
+- Reuse existing components before creating new ones
+- Keep server state out of Zustand
+- Validate external payloads with Zod
+- Avoid duplicate navigation/layout logic
+- Keep PRs small and single-purpose
+
+See:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [.github/copilot-instructions.md](.github/copilot-instructions.md)
+
+## Current Status
+
+Active development. Architecture is being aligned to role-scoped routing and stricter state ownership boundaries.
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.

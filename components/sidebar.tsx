@@ -1,51 +1,50 @@
 
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { BellIcon } from "@heroicons/react/24/solid";
-import { BookOpenIcon } from "@heroicons/react/24/solid";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle, CardDescription,CardHeader } from "@/components/ui/card";
+export default function Sidebar() {
+  return (
+    <aside className="w-[250px] bg-white border-r px-6 py-6 flex flex-col">
 
- export default function Sidebar(){
-      {/* Sidebar */}
-
-    return(
-      <div className="hidden lg:flex bg-white w-64 shrink-0 shadow-lg p-6 flex-col gap-4">
-        <h2 className="text-2xl font-bold">
-            ASTU Research{" "}
-          <span className="text-gray-400 text-base">
-            Management Platform
-          </span>
+      <div className="mb-8">
+        <h2 className="font-semibold text-[16px]">
+          CRMP | ASTU
         </h2>
 
-        <nav className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
-            <Image src="/dashboardreview.svg" alt="" width={30} height={30} />
-            <p>Dashboard</p>
-          </div>
-
-          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
-            <Image src="/circlereview.svg" alt="" width={30} height={30} />
-            <p>New Proposal</p>
-          </div>
-
-          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
-            <Image src="/folderreview.svg" alt="" width={30} height={30} />
-            <p>My Projects</p>
-          </div>
-
-          <div className="flex items-center gap-2 px-3 py-2 rounded hover:bg-[#13DAEC] cursor-pointer">
-            <Image src="/settingsreview.svg" alt="" width={30} height={30} />
-            <p>Settings</p>
-          </div>
-        </nav>
-
-        <div className="mt-auto bg-white border border-gray-200 rounded-lg p-4">
-          <p className="font-semibold text-gray-700 text-sm">Need help?</p>
-          <p className="text-[#13DAEC] text-sm font-bold py-1 cursor-pointer">
-            Contact Support
-          </p>
-        </div>
+        <p className="text-xs text-gray-400">
+          ASTU Research Management Platform
+        </p>
       </div>
- );
+
+      <nav className="space-y-3 text-[14px]">
+
+        <div className="text-gray-600 cursor-pointer">
+          Dashboard
+        </div>
+
+        <div className="bg-cyan-50 text-cyan-600 px-3 py-2 rounded-md font-medium cursor-pointer">
+          New Proposal
+        </div>
+
+        <div className="text-gray-600 cursor-pointer">
+          My Projects
+        </div>
+
+        <div className="text-gray-600 cursor-pointer">
+          Notifications
+        </div>
+
+        <div className="text-gray-600 cursor-pointer">
+          Settings
+        </div>
+
+      </nav>
+
+      <div className="mt-auto text-xs text-gray-400">
+        Need Help?
+        <p className="text-cyan-600 mt-1 cursor-pointer">
+          Contact Support
+        </p>
+      </div>
+
+    </aside>
+  )
+
 }

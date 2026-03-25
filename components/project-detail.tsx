@@ -3,7 +3,11 @@
 import Image from "next/image";
 import useProjectStore from "@/store/projectStore"
 
-export default function ProjectDetailsCard({ onEdit }) {
+interface ProjectDetailsCardProps {
+  onEdit: () => void;
+}
+
+export default function ProjectDetailsCard({ onEdit }: ProjectDetailsCardProps) {
   const project = useProjectStore((state) => state.project);
 
   return (

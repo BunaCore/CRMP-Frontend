@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import Image from "next/image"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 export function LoginForm({
   className,
@@ -18,17 +18,17 @@ export function LoginForm({
     <div
       className={cn(
         "flex items-center justify-center min-h-screen scale-110",
-        className
+        className,
       )}
       {...props}
     >
       <Card className="w-[640px] h-[530px] overflow-hidden p-0 ">
         <CardContent className="grid p-0 md:grid-cols-2 h-full">
-
           <div className="bg-muted relative hidden md:block md:order-1">
-            <img
+            <Image
               src="/Building.png"
               alt="Image"
+              fill
               className="absolute h-full w-full object-cover"
             />
           </div>
@@ -77,7 +77,9 @@ export function LoginForm({
 
                 <div className="flex items-center justify-center gap-3 mt-4">
                   <div className="flex-1 h-[1px] bg-gray-400"></div>
-                  <span className="text-gray-700 font-semibold text-sm">or</span>
+                  <span className="text-gray-700 font-semibold text-sm">
+                    or
+                  </span>
                   <div className="flex-1 h-[1px] bg-gray-400"></div>
                 </div>
 
@@ -90,9 +92,8 @@ export function LoginForm({
               </FieldGroup>
             </form>
           </div>
-
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

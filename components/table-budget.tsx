@@ -19,13 +19,29 @@ interface TableProps {
 }
 
 export default function Table({ rows, setRows, onTotalChange }: TableProps) {
+  // ensure only the first six rows exist in state
+  React.useEffect(() => {
+    if (rows.length > 6) {
+      setRows(rows.slice(0, 6));
+    }
+  }, [rows, setRows]);
+
   const handleChange = (index: number, field: keyof Row, value: string | number) => {
     const updatedRows = [...rows];
-    if (field === "unitCost" || field === "qty") {
-      updatedRows[index][field] = Number(value);
+    const currentRow = updatedRows[index];
+
+    if (field === "unitCost") {
+      currentRow.unitCost = Number(value);
+    } else if (field === "qty") {
+      currentRow.qty = Number(value);
+    } else if (field === "description") {
+      currentRow.description = String(value);
+    } else if (field === "category") {
+      currentRow.category = String(value);
     } else {
-      updatedRows[index][field] = value as string;
+      currentRow.total = Number(value);
     }
+
     updatedRows[index].total = updatedRows[index].unitCost * updatedRows[index].qty;
     setRows(updatedRows);
 
@@ -56,7 +72,7 @@ export default function Table({ rows, setRows, onTotalChange }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
+          {rows.slice(0, 6).map((row, index) => (
             <tr key={index} className="border-b hover:bg-gray-50">
               <td className="py-3 px-4 hidden sm:table-cell">
                 <Input
@@ -98,14 +114,6 @@ export default function Table({ rows, setRows, onTotalChange }: TableProps) {
                 />
               </td>
               <td className="py-2 px-4 text-center font-medium">{row.total.toFixed(2)}</td>
-              <td className="py-2 px-4 text-center">
-                <Button
-                  onClick={() => deleteRow(index)}
-                  className="bg-[#13DAEC]  px-2 py-1 rounded"
-                >
-                  Delete
-                </Button>
-              </td>
             </tr>
           ))}
         </tbody>
