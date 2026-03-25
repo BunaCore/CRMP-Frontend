@@ -59,8 +59,8 @@ export function SignUpForm() {
   function onSubmit(data: SignUpFormData) {
     signUp(data, {
       onSuccess: () => {
-        // Redirect to dashboard on successful sign up
-        router.push('/dashboard');
+        // Redirect to login page after successful registration
+        router.push('/login');
       },
     });
   }

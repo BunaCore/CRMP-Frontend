@@ -7,18 +7,17 @@ import { useAuthStore } from '@/store/auth/authStore';
 
 /**
  * Sign up mutation
- * POST /auth/signup
+ * POST /auth/register
+ * Returns user data without auto-login (user must login after registration)
  */
 export function useSignUp() {
-  const login = useAuthStore((state) => state.login);
-
   return useMutation({
     mutationFn: async (data: SignUpFormData) => {
-      const response = await apiClient.post<SignUpResponse>('/auth/signup', data);
+      // Remove passwordConfirm before sending to backend
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { passwordConfirm, ...registrationData } = data;
+      const response = await apiClient.post<SignUpResponse>('/auth/register', registrationData);
       return response.data;
-    },
-    onSuccess: (data) => {
-      login(data.access_token, data.user);
     },
     onError: (error) => {
       handleApiError(error);

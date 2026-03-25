@@ -2,12 +2,13 @@
 
 import { useEffect } from 'react';
 import { useInitializeAuth } from '@/lib/api/auth/queries';
+import { LoadingScreen } from '@/components/auth/LoadingScreen';
 
 /**
  * AuthInitializer: Runs on app startup
  * - Fetches /auth/me to restore auth state
  * - Updates Zustand store with user data
- * - Shows loading state while checking authentication
+ * - Shows loading screen while checking authentication
  */
 export function AuthInitializer({ children }: { children: React.ReactNode }) {
   const { isLoading, error } = useInitializeAuth();
@@ -19,14 +20,9 @@ export function AuthInitializer({ children }: { children: React.ReactNode }) {
     }
   }, [error]);
 
-  // Optionally show a splash screen while checking auth
-  // For now, just render children (forms can redirect as needed)
+  // Show loading screen while checking auth
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-muted-foreground">Loading...</p>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   return <>{children}</>;
