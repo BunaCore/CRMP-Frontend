@@ -40,7 +40,7 @@ When implementing features, prioritize this target route model even if legacy fo
 - `app/**`: routes, layouts, route composition
 - `components/ui/**`: primitives only
 - `components/**` (outside ui): composed feature components
-- `components/auth`components relatedto auth (important check if u want the work related to auth)
+- `components/auth/**`: auth-related components (login, signup, session flows)
 - `store/**`: Zustand slices/stores
 - `lib/**`: utilities, schemas, adapters, typed contracts
 - `lib/api/**`: API client instances, hooks, and data-fetching logic
