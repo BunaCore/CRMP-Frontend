@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api/client';
 import { LoginResponse } from './types';
-import { useAuthStore } from '@/store/authStore';
+import { useAuthStore } from '@/store/auth/authStore';
 
 /**
  * Get current user info
