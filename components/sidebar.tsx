@@ -1,3 +1,4 @@
+
 export default function Sidebar() {
   return (
     <aside className="w-[250px] bg-white border-r px-6 py-6 flex flex-col">
@@ -45,4 +46,5 @@ export default function Sidebar() {
 
     </aside>
   )
+
 }

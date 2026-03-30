@@ -20,3 +20,4 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
     </form>
   )
 }
+

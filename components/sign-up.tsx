@@ -17,6 +17,7 @@ interface FormData {
 
 export default function SignUpForm() {
   const { error, signInStart, signInSuccess, signInFailure } = useUserStore();
+
   const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",
@@ -30,7 +31,7 @@ export default function SignUpForm() {
   const [formError, setFormError] = useState<string>("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -41,7 +42,6 @@ export default function SignUpForm() {
 
     setFormError("");
 
-    // --- Local validation ---
     if (!formData.fullname || !formData.email || !formData.password) {
       return setFormError("Name, email and password are required");
     }
@@ -58,7 +58,6 @@ export default function SignUpForm() {
       return setFormError("Passwords do not match");
     }
 
-    // --- Global store: start loading ---
     signInStart();
 
     try {
@@ -67,6 +66,7 @@ export default function SignUpForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
 
       if (!res.ok) {
@@ -95,7 +95,9 @@ export default function SignUpForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-      <div className="sm:w-[400px] md:w-[500px] lg:w-[1000px] h-auto lg:h-[600px] border border-black bg-white rounded-xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
+      <div className="sm:w-[400px] md:w-[500px] lg:w-[1000px] border border-black bg-white rounded-xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
+        
+        {/* Image */}
         <div className="hidden lg:block lg:w-1/2 relative">
           <Image
             src="/group.png"
@@ -103,17 +105,16 @@ export default function SignUpForm() {
             fill
             className="object-cover"
           />
+
           <div className="absolute bottom-8 left-6 text-white">
-            <p className="mt-2 text-gray-500">
-              Join the Adama Science and Technology University research
-              community Collaborate. innovate , and manage your projects
-              efficiently
+            <p className="mt-2 text-gray-200">
+              Join the ASTU research community. Collaborate and innovate.
             </p>
           </div>
 
-          <div className="absolute bottom-35 left-6 text-white">
-            <p className="text-2xl font-bold   ">
-              Advancing Science and Technolgy through collaboration
+          <div className="absolute bottom-32 left-6 text-white">
+            <p className="text-2xl font-bold">
+              Advancing Science through collaboration
             </p>
           </div>
 
@@ -125,146 +126,103 @@ export default function SignUpForm() {
               height={40}
               className="rounded-full object-cover"
             />
-            <p className="text-base">CRMP ASTU</p>
+            <p>CRMP ASTU</p>
           </div>
         </div>
 
-        {/*form*/}
+        {/* Form */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center p-6 lg:p-8">
+          <h1 className="text-2xl font-bold mb-4">
+            Join the Research Community
+          </h1>
 
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center p-6 lg:p-8">
-          <div className="mb-4 text-center lg:text-left w-full">
-            <h1 className="text-2xl font-bold mb-2">
-              Join the Research Community
-            </h1>
-          </div>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 w-full max-w-md"
-          >
-            {/* Full Name */}
-            <label className="flex flex-col w-full">
-              <span className="text-gray-700 text-sm mb-1 font-bold">
-                Full Name{" "}
-              </span>
-              <input
-                type="text"
-                name="name"
-                value={formData.fullname}
-                onChange={handleChange}
-                className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-              />
-            </label>
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Full Name"
+              value={formData.fullname}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            />
 
-            {/* Optional fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">
-                  Department
-                </span>
-                <input
-                  type="text"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-                />
-              </label>
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">
-                  University ID
-                </span>
-                <input
-                  type="text"
-                  name="universityId"
-                  value={formData.universityId}
-                  onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-                />
-              </label>
-            </div>
+            <input
+              type="text"
+              name="department"
+              placeholder="Department"
+              value={formData.department}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            />
 
-            {/* Email */}
-            <label className="flex flex-col w-full">
-              <span className="text-gray-700 text-sm mb-1 font-bold">
-                Email{" "}
-              </span>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-              />
-            </label>
+            <input
+              type="text"
+              name="universityId"
+              placeholder="University ID"
+              value={formData.universityId}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            />
 
-            {/* Passwords */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">
-                  Password{" "}
-                </span>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-                />
-              </label>
-              <label className="flex flex-col w-full">
-                <span className="text-gray-700 text-sm mb-1 font-bold">
-                  Confirm Password{" "}
-                </span>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="w-full border p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-                />
-              </label>
-            </div>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            />
 
-            <label className="flex flex-col w-full">
-              <span className="text-gray-700 text-sm mb-1 font-bold">Role</span>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            />
 
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full border h-10 p-1 border-[#F8FBFC] rounded-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
-              >
-                <option value="" disabled>
-                  Select role
-                </option>
-                <option value="undergraduate">Undergraduate</option>
-                <option value="postgraduate">Postgraduate</option>
-                <option value="principal">Principal Investigator</option>
-              </select>
-            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            />
+
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            >
+              <option value="">Select role</option>
+              <option value="undergraduate">Undergraduate</option>
+              <option value="postgraduate">Postgraduate</option>
+              <option value="principal">Principal Investigator</option>
+            </select>
 
             {(formError || error) && (
-              <p className="text-red-500 text-sm">{formError || error}</p>
+              <p className="text-red-500 text-sm">
+                {formError || error}
+              </p>
             )}
 
             <button
               type="submit"
-              className="w-full bg-[#13DAEC] p-2 rounded hover:opacity-75 mt-2"
+              className="bg-[#13DAEC] p-2 rounded"
             >
               Create Account
             </button>
 
-            <div className="text-center text-base ">
+            <p className="text-sm text-center">
               Already have an account?{" "}
               <Link href="/login" className="text-[#13DAEC] font-bold">
                 Login
               </Link>
-              <p className="mt-2 text-gray-600 text-xs">
-                By creating an account you agree to our terms & conditions and
-                privacy policy
-              </p>
-            </div>
+            </p>
           </form>
         </div>
       </div>

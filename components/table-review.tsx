@@ -25,11 +25,11 @@ export default function TableReview({ onEdit }: TableReviewProps) {
       >
         <div className="flex items-center gap-2">
           <Image src="/banknote.svg" alt="banknote" width={30} height={30} />
-          <h1 className="lg:text-2xl text-xl font-bold">Budget & Timeline</h1>
+          <h1 className="lg:text-2xl md:text-xl text-base font-bold">Budget & Timeline</h1>
         </div>
 
         <div className="flex items-center gap-2">
-          <span>Click to {isOpen ? "collapse" : "expand"}</span>
+          <span className="lg:text-base sm:text-sm">Click to {isOpen ? "collapse" : "expand"}</span>
           {isOpen ? (
             <ChevronUp size={20} className="text-gray-600" />
           ) : (
@@ -40,7 +40,7 @@ export default function TableReview({ onEdit }: TableReviewProps) {
 
       {isOpen && (
         <>
-          <div className="w-full h-25 border border-gray-200 rounded-t-md border-b-0 py-10 px-12 bg-white flex justify-between items-center">
+          <div className="w-full h-25 border border-gray-200 rounded-t-md py-10 px-12 bg-white flex justify-between items-center">
             <h1 className="lg:text-2xl text-xl font-bold">Uploaded Documents</h1>
 
             <div
@@ -53,17 +53,17 @@ export default function TableReview({ onEdit }: TableReviewProps) {
           </div>
 
           {loading ? (
-            <p className="px-12 py-4 text-gray-500">Loading documents...</p>
+            <p className="px-12 py-4 text-gray-500 text-center">Loading documents...</p>
           ) : documents.length === 0 ? (
-            <div className="border border-gray-700 rounded-md">
-              <p className="px-12 py-4 text-gray-500">No documents uploaded yet.</p>
+            <div className="border rounded-md  border-gray-200 ">
+              <p className="px-12 py-4 text-center">No documents uploaded yet.</p>
             </div>
           ) : (
-            <div className="bg-white rounded-b-md border border-gray-700 w-full flex flex-col py-5 px-12 gap-4 -mt-6">
+            <div className="bg-white rounded-b-md border border-gray-200 w-full flex flex-col py-5 px-12 gap-4 -mt-6">
               {documents.map((doc, index) => (
                 <div
                   key={index}
-                  className="border border-gray-700 w-full h-30 rounded-lg p-4 flex justify-between"
+                  className="border border-gray-200 w-full h-30 rounded-lg p-4 flex justify-between"
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
